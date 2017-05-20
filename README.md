@@ -26,10 +26,6 @@ Emoter bot built with my own personality by using my Facebook messages for its c
 
 <img src="/screenshots/emoter_demo_5.png?raw=true" width="600px" />
 
-Emoter as demonstrated in a Parsons BFA thesis show (2 W 13th St exhibit), running on a CRT monitor.
-
-<img src="/screenshots/emoter-web-demo-3.png?raw=true" width="600px" />
-
 ### Prerequisites
 
 * Windows / Mac (Untested on Linux)
