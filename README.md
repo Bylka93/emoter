@@ -1,10 +1,12 @@
 # Emoter / Emote
 
+Last updated on May 20, 2017
+
 Here's a link to the Medium post about the development of Emoter throughout my undergrad senior year:
 
-[https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd](How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy)
+"How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy"
 
-Last updated on May 20, 2017
+https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd
 
 This repository contains the full source code for a sentiment analyzer library called Emote, and its companion program Emoter, a chatbot library intergrated with Emote that allows it to empathize with the users talking to it. Emote is based off TextBlob's (NLTK's) naive Bayes probability system, and is able to detect reasonably accurate values for 3-6 different emotional tones, from 26 (36 eventually) classifications. Emoter chatbot agents use Emote to analyze user messages, then choose an emotionally appropriate response from interchangable "conversations", based around designed personalities / personas. Emoter includes a      (mostly) automated way of parsing downloaded Facebook messages to build a text corpus off an individual person's Facebook profile. This project developed for my undergraduate thesis at Parsons School of Design.
 
