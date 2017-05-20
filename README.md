@@ -297,10 +297,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 Other thanks:
 
-Kyle Li
-Sven Travis
-Brad McDonald
-Ernesto Klarr
+Kyle Li — Sven Travis — Brad McDonald — Ernesto Klarr
 Han Shen Chen — Wei Wei — Benjamin Norskov
 Gentry Demchak — John Delguidice — Nicholas Elia
 Andrew Benson — Kate Wallace — Danny Dang — Alex Addington-White 
@@ -343,11 +340,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * scikit-learn
 * Flask
 * MetroUI (for HTML / CSS template)
-
-
-## List of Texts / Sources Used in Database (Incomplete)
-
-* Fight Club
-* Pride And Prejudice
-* Freakonomics
-
