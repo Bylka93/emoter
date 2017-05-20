@@ -184,12 +184,7 @@ To train an existing Emoter with a new brain (must be located within /data:
 ```
 new_brain_path = different_virtual_assistant
 emtBot.trainDatabase(new_brain_path)
-```
-To see Emoter's empathy results (analysis of user message):
 
-```
-new_brain_path = different_virtual_assistant
-emtBot.trainDatabase(new_brain_path)
 ```
 
 To call Emote's functions through Emoter..
