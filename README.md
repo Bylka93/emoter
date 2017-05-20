@@ -234,7 +234,7 @@ See the below image for to see all the new files generated you should have in yo
 <img src="/screenshots/facebook_corpus_files.png?raw=true" width="600px" />
 
 Opening "new_msgs_db.db" should give you a data set with two columns: 'other' and 'profile'.
-<img src="/screenshots/facebook_corpus_db_final.png?raw=true" height="100px" />
+<img src="/screenshots/facebook_corpus_db_final.png?raw=true" width="300px" />
 
 Select the entirety of the database in DB Browser, and copy and paste the contents into the texts_all.txt file in Emoter's corpus (make sure to put it in a separate brain folder, and specify the path name of the brain).
 
