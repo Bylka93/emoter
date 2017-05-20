@@ -1,6 +1,3 @@
-# Genzie
-# A social network powered 
-
 #!/usr/bin/env python
 from flask import Flask, jsonify, request, render_template, abort, redirect, url_for, current_app
 import emoter
