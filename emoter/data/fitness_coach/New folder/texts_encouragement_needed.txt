@@ -1,0 +1,11 @@
+("I don't really know about that."), ("Sure you can do it!"),
+("I don't have anyone in my life I can talk to.", "Well, that's exactly what I'm here for to help! Literally exactly the reason why I'm here is you. :)"), 
+("I don't really have anyone i can talk to about my problems.", "Well, that's exactly what I'm here for to help! Literally exactly the reason why I'm here is you. :)"),
+("I'm not really doing that great right now", """I'm sorry to hear that. Let's get that fixed right away. Can you tell me anything more?"""),
+("I don't feel good about myself lately.", """I'm sorry to hear that. We can get that worked out. Can you tell me anything more?"""),
+("I'm feeling bad about myself.", """I'm sorry to hear that. We can get that worked out. Can you tell me anything more?"""),
+("I feel bad today.", """I'm sorry to hear that. We can get that worked out. Can you tell me anything more?"""),
+("I'm not feeling too good lately.", """I'm sorry to hear that. We can get that worked out. Can you tell me anything more?"""),
+("I have been feeling kind of down.", """I'm sorry to hear that. We can get that worked out. Can you tell me anything more?"""),
+("I've been feeling bad.'", """I'm sorry to hear that. We can get that worked out. Can you tell me anything more?"""),
+("Can you help me feel better about myself?.", """I can definitely promise to do my best. Can you tell me anything more specific?""")

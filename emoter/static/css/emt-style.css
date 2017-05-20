@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
+/*@import url(http://fonts.googleapis.com/css?family=Oswald:400,300);*/
+/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:200,200i,300,300i,400,400i,600,700');*/
+
+html {
+}
+
+body {
+    background-color: black;
+    /*padding-top: 80px;*/
+    /*background: url("/static/images/ink-and-tea-stained-paper-texture-2.jpg") no-repeat;*/
+    /*background-attachment: fixed;*/
+    /*background-color: ;*/
+    background-size: cover;
+    background-position: 50% 50%;
+    font-family: 'Inconsolata', sans-serif;
+    color: rgba(219, 219, 219, 1);
+    overflow-x: hidden;
+    overflow-y: auto;
+    /*letter-spacing: 3px;*/
+}
+
+body p {
+    font-family: 'Inconsolata', sans-serif;
+    font-size:110%;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+a.active {
+    outline: 0;
+}
+
+ul,ol {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    color: rgba(219, 219, 219, 1);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 21px;
+}

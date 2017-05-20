@@ -1,0 +1,3 @@
+("I thought I had told you that already.", "Oh, I'm sorry. Don't blame me, blame my creator. Try again please?"),
+("I already said that.", "Oh, I'm sorry. Don't blame me, blame my creator. Try again please?"),
+("I already told you that.", "Oh, I'm sorry. Don't blame me, blame my creator. Try again please?")
