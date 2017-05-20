@@ -176,8 +176,7 @@ To load a different, stored corpus in the same Emoter instance, you must have al
 
 ```
 import emoter as emt
-brain_path = custom_virtual_assistant
-emtBot = emt.Emoter()
+emtBot = emt.Emoter(brain_path="custom_bot_name")
 emtBot.getMsg("hello emoter")
 ```
 To train an existing Emoter with a new brain (must be located within /data:
