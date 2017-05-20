@@ -1,19 +1,20 @@
 # Emoter / Emote
 
-Last updated on May 06, 2017
+Here's a link to the Medium post about the development of Emoter throughout my undergrad senior year.
+[https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd](https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd)
 
-[emoter.me](http://emoter.me "Emoter Homepage") (The information on this website is not up to date, as Emoter has gone open-source)
+Last updated on May 20, 2017
 
-[try-emote.ml](http://try-emote.ml "Emote Web Demo") (The web server it was living on is broken right now, but Emote will work running locally)
-
-This repository contains the full source code for a sentiment analyzer library called Emote, and its companion program Emoter, a chatbot library intergrated with Emote that allows it to empathize with the users talking to it. Emote is based off TextBlob's (NLTK's) naive Bayes probability system, and is able to detect reasonably accurate values for 3-6 different emotional tones, from a total range of 36 classifications. Emoter chatbot agents use Emote to analyze user messages, then choose an emotionally appropriate response from interchangable "conversations", based around designed personalities / personas. This project was (or, is still currently being) developed for my undergraduate thesis at Parsons School of Design.
+This repository contains the full source code for a sentiment analyzer library called Emote, and its companion program Emoter, a chatbot library intergrated with Emote that allows it to empathize with the users talking to it. Emote is based off TextBlob's (NLTK's) naive Bayes probability system, and is able to detect reasonably accurate values for 3-6 different emotional tones, from 26 (36 eventually) classifications. Emoter chatbot agents use Emote to analyze user messages, then choose an emotionally appropriate response from interchangable "conversations", based around designed personalities / personas. Emoter includes a      (mostly) automated way of parsing downloaded Facebook messages to build a text corpus off an individual person's Facebook profile. This project developed for my undergraduate thesis at Parsons School of Design.
 
 
 ## Note
 
-Emote / Emoter are open-sourced under the MIT License. The back end code (outside the libraries and database) totals only around ~1500 lines right now, so many features are lacking still. I've mapped out full design specs in diagrams located in the /docs directory.
+Emote / Emoter are open-sourced under the MIT License.
 
 ### Screenshots
+
+
 
 <img src="/screenshots/emote-demo-1.png?raw=true" width="350px" />
 
@@ -211,23 +212,34 @@ To use Emoter's web interface (which was built for an art exhibit to be displaye
 
 ## Generating an Emoter corpus from Facebook messages
 
+
 First of all, this system does not work especially well, and is pretty hacked together. Follow at your own caution.
 
 Go here to download your Facebook archive:
-https://www.facebook.com/help/131112897028467.
+[https://www.facebook.com/help/131112897028467](https://www.facebook.com/help/131112897028467).
 
 Then, use the Facebook Chart Archive Parser tool, which can be downloaded here:
-https://github.com/ownaginatious/fbchat-archive-parser.
+[https://github.com/ownaginatious/fbchat-archive-parser](https://github.com/ownaginatious/fbchat-archive-parser).
+
 
 Running fbchat-archive-parser will give you a CSV file with data formatted into these columns: ['thread'], ['sender'], ['date'], and ['message']. Save or rename this CSV file as "msg_csv.csv", and store it into the root folder of Emoter.
 
-Running 'emoter_corpus_fb_parser.py' allows you to enter in a Facebook personal email address to automatically parse and generate a usable Emoter corpus, after the initial parsing with fbchat-archive-parser.
+Running 'emoter_corpus_fb_parser.py' allows you to enter in the full name of the Facebook user to automatically parse and generate a usable Emoter corpus, after the initial parsing with fbchat-archive-parser. To create a corpus off a single individual profile, only responses said by the specified user directly after an 'other' user message are counted.
 
-The end result will give you a text file with the generated Facebook corpus, output as "final_msgs.txt", which is currently NOT a usable file. I was unable to parse the lines from the text file without getting Unicode decoding errors. To circumvent this and obtain an actually working corpus, you have to open the final SQL database generated, "new_msgs_db.db", into the program DB Browser for SQLite (http://sqlitebrowser.org/). Once you have the final table with all the information open in DB Browser, select all the message-pair responses in the database, and copy and paste it into a text file. Every line should contain the message, in quotes, followed by a single tab ("\t"), and the response, also in quotes. 
+The end result will give you a text file with the generated Facebook corpus, output as "final_msgs.txt", which is currently NOT a usable file. I was unable to parse the lines from the text file without getting Unicode decoding errors. To circumvent this and obtain an actually working corpus, you have to open the final SQL database generated, "new_msgs_db.db", into the program DB Browser for SQLite ([http://sqlitebrowser.org](http://sqlitebrowser.org)). Once you have the final table with all the information open in DB Browser, select all the message-pair responses in the database, and copy and paste it into a text file. Every line should contain the message, in quotes, followed by a single tab ("\t"), and the response, also in quotes. 
 
-See the below image for an example of the format of the final corpus you should have from the Facebook data. 
+See the below image for to see all the new files generated you should have in your directory now. 
+<img src="/screenshots/facebook_corpus_files?raw=true" width="600px" />
+
+Opening "new_msgs_db.db" should give you a data set with two columns: 'other' and 'profile'.
+<img src="/screenshots/facebook_corpus_db_final?raw=true" width="600px" />
+
+Select the entirety of the database in DB Browser, and copy and paste the contents into the texts_all.txt file in Emoter's corpus (make sure to put it in a separate brain folder, and specify the path name of the brain).
+
+See the below image for an example of the format of the final corpus you should have, in texts_all.txt.
 <img src="/screenshots/facebook_corpus_parsed.png?raw=true" width="600px" />
 
+Right now, there is no automated classification of the the Facebook corpus to be used in Emoter's empathy. You currently can only do that manually.
 
 ### Training / Adding Your Own Emote Corpus
 
@@ -247,6 +259,7 @@ Right now, you have to copy and paste all the training data (structured as tuple
 * Emoter agents have no ability to remember or learn new things
 * Emoter agents only search for one matching database, not multiple. If the threshold fails, then Emoter will just search the entire database.
 * Conversations / texts are just lists of tuples, which is too limiting of a data structure
+* No automated way of training Facebook database for Emoter's empathetic functionality
 
 ### Future Plans
 
@@ -284,10 +297,10 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 Other thanks:
 
-Kyle  Li, Design and Technology program director for the last several years
-Sven Travis, thesis professor
-Brad McDonald, thesis professor
-Ernesto Klarr, thesis professor
+Kyle Li
+Sven Travis
+Brad McDonald
+Ernesto Klarr
 Han Shen Chen — Wei Wei — Benjamin Norskov
 Gentry Demchak — John Delguidice — Nicholas Elia
 Andrew Benson — Kate Wallace — Danny Dang — Alex Addington-White 
