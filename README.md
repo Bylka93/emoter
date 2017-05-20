@@ -1,6 +1,7 @@
 # Emoter / Emote
 
-Here's a link to the Medium post about the development of Emoter throughout my undergrad senior year.
+Here's a link to the Medium post about the development of Emoter throughout my undergrad senior year:
+"How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy"
 [https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd](https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd)
 
 Last updated on May 20, 2017
@@ -13,8 +14,9 @@ This repository contains the full source code for a sentiment analyzer library c
 Emote / Emoter are open-sourced under the MIT License.
 
 ### Screenshots
+<img src="/screenshots/emoter-fb-johnny-demo-web.gif?raw=true" width="680px" />
 
-
+<img src="/screenshots/emote-demo-1.png?raw=true" width="350px" />
 
 <img src="/screenshots/emote-demo-1.png?raw=true" width="350px" />
 
@@ -229,10 +231,10 @@ Running 'emoter_corpus_fb_parser.py' allows you to enter in the full name of the
 The end result will give you a text file with the generated Facebook corpus, output as "final_msgs.txt", which is currently NOT a usable file. I was unable to parse the lines from the text file without getting Unicode decoding errors. To circumvent this and obtain an actually working corpus, you have to open the final SQL database generated, "new_msgs_db.db", into the program DB Browser for SQLite ([http://sqlitebrowser.org](http://sqlitebrowser.org)). Once you have the final table with all the information open in DB Browser, select all the message-pair responses in the database, and copy and paste it into a text file. Every line should contain the message, in quotes, followed by a single tab ("\t"), and the response, also in quotes. 
 
 See the below image for to see all the new files generated you should have in your directory now. 
-<img src="/screenshots/facebook_corpus_files?raw=true" width="600px" />
+<img src="/screenshots/facebook_corpus_files.png?raw=true" width="600px" />
 
 Opening "new_msgs_db.db" should give you a data set with two columns: 'other' and 'profile'.
-<img src="/screenshots/facebook_corpus_db_final?raw=true" width="600px" />
+<img src="/screenshots/facebook_corpus_db_final.png?raw=true" width="600px" />
 
 Select the entirety of the database in DB Browser, and copy and paste the contents into the texts_all.txt file in Emoter's corpus (make sure to put it in a separate brain folder, and specify the path name of the brain).
 
