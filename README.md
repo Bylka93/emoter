@@ -2,9 +2,7 @@
 
 Here's a link to the Medium post about the development of Emoter throughout my undergrad senior year:
 
-"How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy"
-
-[https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd](https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd)
+[https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd](How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy)
 
 Last updated on May 20, 2017
 
