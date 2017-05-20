@@ -14,9 +14,9 @@ This repository contains the full source code for a sentiment analyzer library c
 Emote / Emoter are open-sourced under the MIT License.
 
 ### Screenshots
-<img src="/screenshots/emoter-fb-johnny-demo-web.gif?raw=true" width="680px" />
 
-<img src="/screenshots/emote-demo-1.png?raw=true" width="350px" />
+Emoter bot built with my own personality by using my Facebook messages for its corpus.
+<img src="/screenshots/emoter-fb-johnny-demo-web.gif?raw=true" width="680px" />
 
 <img src="/screenshots/emote-demo-1.png?raw=true" width="350px" />
 
