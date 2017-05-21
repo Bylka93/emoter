@@ -52,6 +52,8 @@ Positive, negative; love, hate; joy, anger; certainty, confusion; amusement, bor
 10 additional tones can be derived from the 26 base tones through combining associations: obedience, assertiveness; attraction, disgust; informative, malevolent; anxiety, excitement; hopeful, horror.
 ```
 
+<img src="/screenshots/emoter-empathy-diagram.png?raw=true" width="300px" />
+
 
 ### Installing
 
@@ -83,6 +85,7 @@ Now download the pickled classifier file (so the data doesn't have to be re-trai
 Put the pickle file in the /data directory of Emoter / Emote, or build the pickled file yourself with your own custom database automatically by running emote.py.
 
 Now you can use both Emote and Emoter libraries.
+
 
 ## Using Emote (Sentiment Analysis)
 
@@ -141,6 +144,7 @@ To use Emote's web interface and mass analyzer feature (for CSV data input / out
 <img src="/screenshots/emote-web-demo-1.png?raw=true" width="600px" />
 
 <img src="/screenshots/emote-web-demo-2.png?raw=true" width="600px" />
+
 
 ## Using Emoter (Chatbot)
 
@@ -206,7 +210,6 @@ To use Emoter's web interface (which was built for an art exhibit to be displaye
 
 ## Generating an Emoter corpus from Facebook messages
 
-
 First of all, this system does not work especially well, and is pretty hacked together. Follow at your own caution.
 
 Go here to download your Facebook archive:
@@ -230,6 +233,8 @@ which will give you the CSV file with data formatted into these columns: ['threa
 
 Running 'emoter_corpus_fb_parser.py' allows you to enter in the full name of the Facebook user to automatically parse and generate a usable Emoter corpus, after the initial parsing with fbchat-archive-parser. To create a corpus off a single individual profile, only responses said by the specified user directly after an 'other' user message are counted.
 
+<img src="/screenshots/emoter-fb-corpus-parser.png?raw=true" width="600px" />
+
 The end result will give you a text file with the generated Facebook corpus, output as "final_msgs.txt", which is currently NOT a usable file. I was unable to parse the lines from the text file without getting Unicode decoding errors. To circumvent this and obtain an actually working corpus, you have to open the final SQL database generated, "new_msgs_db.db", into the program DB Browser for SQLite ([http://sqlitebrowser.org](http://sqlitebrowser.org)). Once you have the final table with all the information open in DB Browser, select all the message-pair responses in the database, and copy and paste it into a text file. Every line should contain the message, in quotes, followed by a single tab ("\t"), and the response, also in quotes. 
 
 See the below image for to see all the new files generated you should have in your directory now. 
@@ -247,6 +252,7 @@ Delete all the db and CSV and other files created in the process to clean up.
 
 Right now, there is no automated classification of the the Facebook corpus to be used in Emoter's empathy. You currently can only do that manually.
 
+
 ### Training / Adding Your Own Emote Corpus
 
 Follow this quick visual guide to understand how the base corpus has been trained.
@@ -257,6 +263,7 @@ Also, see the file 'alice_classification_training_sample.txt' to see passages fr
 
 Right now, you have to copy and paste all the training data (structured as tuples) into the list varible 'self.train' in emote.py, if you are building your own corpus or expanding the base knowledge. Taking in the tuples from a text file was giving me unicode errors; must fix this later. 
 
+
 ### Current Limitations
 
 * System for deriving 10 additional tones from base 26 has not yet been implemented
@@ -266,6 +273,7 @@ Right now, you have to copy and paste all the training data (structured as tuple
 * Emoter agents only search for one matching database, not multiple. If the threshold fails, then Emoter will just search the entire database.
 * Conversations / texts are just lists of tuples, which is too limiting of a data structure
 * No automated way of training Facebook database for Emoter's empathetic functionality
+
 
 ### Future Plans
 
@@ -282,6 +290,7 @@ Right now, you have to copy and paste all the training data (structured as tuple
 * Build a Unity SDK for Emote / Emoter
 * Incorporation with speech recognition and speech synthesis
 * Incorporation with computer vision
+
 
 ## Deployment
 
@@ -337,6 +346,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 [https://www.researchgate.net/publication/308017468_Domain-specific_sentiment_classification_via_fusing_sentiment_knowledge_from_multiple_sources/](https://www.researchgate.net/publication/308017468_Domain-specific_sentiment_classification_via_fusing_sentiment_knowledge_from_multiple_sources/)
 
 [http://www.julianjaynes.org/evidence_summary.php/](http://www.julianjaynes.org/evidence_summary.php/)
+
 
 ## Credits
 
