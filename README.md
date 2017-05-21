@@ -176,13 +176,14 @@ To load a different, stored corpus in the same Emoter instance, you must have al
 
 ```
 import emoter as emt
-emtBot = emt.Emoter(brain_path="custom_bot_name")
+brain_path = "custom_bot_name"
+emtBot = emt.Emoter(brain_path)
 emtBot.getMsg("hello emoter")
 ```
 To train an existing Emoter with a new brain (must be located within /data:
 
 ```
-new_brain_path = different_virtual_assistant
+new_brain_path = "different_virtual_assistant"
 emtBot.trainDatabase(new_brain_path)
 ```
 
@@ -214,8 +215,18 @@ Go here to download your Facebook archive:
 Then, use the Facebook Chart Archive Parser tool, which can be downloaded here:
 [https://github.com/ownaginatious/fbchat-archive-parser](https://github.com/ownaginatious/fbchat-archive-parser).
 
+Or installed with pip:
+```
+pip install fbchat-archive-parser
+```
 
-Running fbchat-archive-parser will give you a CSV file with data formatted into these columns: ['thread'], ['sender'], ['date'], and ['message']. Save or rename this CSV file as "msg_csv.csv", and store it into the root folder of Emoter.
+With fbchat-archive-parser installed in your virtual environment, cd into the folder containing your Facebook message archive (extracted from the zip file Facebook gives you). The file you need exactly is "messages.htm" in the /html folder. 
+
+When you're in the right directory, enter in the command:
+```
+fbcap ./messages.htm -f csv > msgs_csv.csv
+```
+which will give you the CSV file with data formatted into these columns: ['thread'], ['sender'], ['date'], and ['message']. Save or rename this CSV file as "msg_csv.csv", and store it into the root folder of Emoter (where emoter_corpus_fb_parser.py is in).
 
 Running 'emoter_corpus_fb_parser.py' allows you to enter in the full name of the Facebook user to automatically parse and generate a usable Emoter corpus, after the initial parsing with fbchat-archive-parser. To create a corpus off a single individual profile, only responses said by the specified user directly after an 'other' user message are counted.
 
@@ -231,6 +242,8 @@ Select the entirety of the database in DB Browser, and copy and paste the conten
 
 See the below image for an example of the format of the final corpus you should have, in texts_all.txt.
 <img src="/screenshots/facebook_corpus_parsed.png?raw=true" width="600px" />
+
+Delete all the db and CSV and other files created in the process to clean up.
 
 Right now, there is no automated classification of the the Facebook corpus to be used in Emoter's empathy. You currently can only do that manually.
 
