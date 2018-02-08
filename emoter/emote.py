@@ -9,7 +9,7 @@ import time
 import gc
 from future.builtins import input
 import pickle as pickle
-# import shelve
+# import shelve # Shelve used because it can manipulate serialized data unlike pickle, but it's a lot slower. To be used in the future for retraining the naive Bayes models.
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize
@@ -57,11 +57,6 @@ class Emote(object):
         # self.train = [
         # ]
 
-        self.train = []
-
-        #
-
-
         self.message = message
         self.punctCountDict = punctCountDict
         self.wordCount = wordCount
@@ -95,6 +90,7 @@ class Emote(object):
         self.instructive = instructive
         self.ambivalence = ambivalence
         self.vulgarity = vulgarity
+
         self.prob_dist = prob_dist
         self.prob_dist_max = prob_dist_max
         self.cl = cl
