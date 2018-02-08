@@ -14,6 +14,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize
 from textblob import TextBlob
+from textblob import TextBlob as TextBlob
 from textblob.classifiers import NaiveBayesClassifier
 from textblob.sentiments import NaiveBayesAnalyzer
 # import sqlite3
@@ -55,6 +56,11 @@ class Emote(object):
         # PLACE THE TRAINING DATA (TUPLES) IN SELF.TRAIN BELOW
         # self.train = [
         # ]
+
+        self.train = []
+
+        #
+
 
         self.message = message
         self.punctCountDict = punctCountDict
@@ -164,6 +170,12 @@ class Emote(object):
             "\t\tDesire: " + str(countDesire) + "\t" + "Calm: " + str(countCalm) + "\t\tEmphatic: " + str(countEmphatic) + "\t" + "Sarcastic: " + str(countSarcastic) + \
             "\t\tInstructive: " + str(countInstructive) + "\t" + "Accusative: " + str(countAccusative) + "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + \
             "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + "\t\tAmbivalence: " + str(countAmbivalence) + "\t" + "Vulgarity: " + str(countVulgarity)
+            "\t\tJoy: " + str(countJoy) + "\t\t" + "Anger: " + str(countAnger) + "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + \
+            "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + "\t\tAmusement: " + str(countAmusement) + "\t" + "Boredom: " + str(countBoredom) + \
+            "\t\tIntensity: " + str(countIntensity) + "\t" + "Regret: " + str(countRegret) + "\t\tAgreeable: " + str(countAgreeable) + "\t" + "Challenging: " + str(countChallenging) + \
+            "\t\tDesire: " + str(countDesire) + "\t" + "Calm: " + str(countCalm) + "\t\tEmphatic: " + str(countEmphatic) + "\t" + "Sarcastic: " + str(countSarcastic) + \
+            "\t\tInstructive: " + str(countInstructive) + "\t" + "Accusative: " + str(countAccusative) + "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + \
+            "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + "\t\tAmbivalence: " + str(countAmbivalence) + "\t" + "Vulgarity: " + str(countVulgarity)
 
         print("""\n\tNumbers and types of classifications in database to be loaded: \n""")
         print("\t\tPositive: " + str(countPositive) + "\t" + "Negative: " + str(countNegative))
@@ -253,11 +265,29 @@ class Emote(object):
             #     #     i = i.encode('ascii', 'backslashreplace')
             #     #     i = i.rstrip("\r\n") 
             #     #     print(i)
+            # path = os.path.join(path, 'data', 'base_corpus.py')          
+                # shelvedData = shelve.open('base_corpus.db')
+                # if shelvedData:
+                    # pickledOn = True
+            # with open(path, 'r') as fp:
+                # print(fp)
+            # fp = open(path,'r').read().tt('\n')
+            # self.train = fp.readlines()
+            # temp = [line[:-1] for line in self.train]
+            # print(temp)
+                # self.train = self.train.rstrip("\r\n")
+                # for i in self.train:
+                    # i = i.encode('ascii', 'backslashreplace')
+                    # i = i.rstrip("\r\n") 
+                    # print(i)
             # lines = tuple(open(path, 'r', encoding = 'utf-8'))
             # lines = lines.strip()
             # print(str(lines))
             # self.train = lines
             print(self.train)
+            # print(self.train)
+
+            print("\n\tOpening training data.")
 
             # if SQLDataOn == False: 
                 # self.sendToSQL()
@@ -272,6 +302,9 @@ class Emote(object):
             self.cl = NaiveBayesClassifier(self.train)
             print("\n\tTraining now..")
             # shelvedData["base"] = cl # SHELF vs PICKLE
+            # path = os.getcwd()
+            # path = os.path.join(path, 'data', 'base_corpus.pickle')    
+            # dir = os.path.dirname(os.path.abspath(__file__))
             dir = os.path.abspath(os.path.dirname(__file__))
             path = os.path.join(dir, 'data', 'base_corpus.pickle')
 
@@ -289,6 +322,9 @@ class Emote(object):
                 path = os.getcwd()
                 path = os.path.join(path, 'data', 'base_corpus.pickle')                
                 fp = open(path, 'rb')
+                # path = os.getcwd()
+                # path = os.path.join(path, 'data', 'base_corpus.pickle')                
+                fp = open(path,"rb")
                 self.cl = pickle.load(fp)
                 fp.close()
                 print("\n\tTraining has been loaded from the selected corpus.")
@@ -462,6 +498,8 @@ class Emote(object):
             print("\n\tAnalyzing " + "'"+str(_message)+"'" +"..")
             self.prob_dist = self.cl.prob_classify(_message);
             self.prob_dist_max = self.prob_dist.max()
+            # print("\n\tAnalyzing " + "'"+str(_message)+"'" +"..")
+            self.prob_dist = self.cl.prob_classify(_message); self.prob_dist_max = self.prob_dist.max()
             self.positive = round(self.prob_dist.prob("positive"), 4); self.negative = round(self.prob_dist.prob("negative"), 4)
             self.joy = round(self.prob_dist.prob("joy"), 4); self.anger = round(self.prob_dist.prob("anger"), 4)
             self.love = round(self.prob_dist.prob("love"), 4); self.hate = round(self.prob_dist.prob("hate"), 4)
@@ -503,7 +541,7 @@ class Emote(object):
                 print("\tAdmiration: " + str(self.admiration) + "\tInquisitive: " + str(self.inquisitive))
                 print("\tModest: " + str(self.modest) + "\tPride: " + str(self.pride))
                 print("\tAmbivalence: " + str(self.ambivalence) + "\tVulgarity: " + str(self.vulgarity))
-            
+
                 self.normalizedProbValues = pd.Series({'positive': self.positive, 'negative' : self.negative, 'joy' : self.joy, 'anger' : self.anger,
                                            'love': self.love, 'hate' : self.hate, 'certainty' : self.certainty, 'confusion' : self.confusion,
                                            'amusement' : self.amusement, 'boredom' : self.boredom, 'intensity' : self.intensity, 'regret' : self.regret,
@@ -519,6 +557,22 @@ class Emote(object):
                 # return self.normalizedProbValues, self.prob_dist, self.prob_dist_max, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
          
             else:
+                # self.normalizedProbValues = pd.DataFrame(pdData).astype(np.float32)
+                # print("\n\t",self.normalizedProbValues)
+                # print("\n\t", self.normalizedProbValues.describe())
+                self.normalizeProbabilityPunctuation (_message)
+                # return self.normalizedProbValues
+                # return self.prob_dist, self.prob_dist_max, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
+                # return self.normalizedProbValues, self.prob_dist, self.prob_dist_max, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
+         
+            else:
+                # pdData = [{'positive': self.positive, 'negative' : self.negative, 'joy' : self.joy, 'anger' : self.anger,
+                #                            'love': self.love, 'hate' : self.hate, 'certainty' : self.certainty, 'confusion' : self.confusion,
+                #                            'amusement' : self.amusement, 'boredom' : self.boredom, 'intensity' : self.intensity, 'regret' : self.regret,
+                #                            'agreeable': self.agreeable, 'challenging' : self.challenging, 'desire' : self.desire, 'calm' : self.calm,
+                #                            'emphatic' : self.emphatic, 'sarcastic' : self.sarcastic, 'instructive' : self.instructive, 'accusative' : self.accusative,
+                #                            'admiration' : self.admiration, 'inquisitive' : self.inquisitive, 'modest' : self.modest, 'pride' : self.pride,
+                #                            'ambivalence' : self.ambivalence, 'vulgarity' : self.vulgarity}]
                 self.normalizedProbValues = pd.Series({'positive': self.positive, 'negative' : self.negative, 'joy' : self.joy, 'anger' : self.anger,
                                            'love': self.love, 'hate' : self.hate, 'certainty' : self.certainty, 'confusion' : self.confusion,
                                            'amusement' : self.amusement, 'boredom' : self.boredom, 'intensity' : self.intensity, 'regret' : self.regret,
@@ -526,13 +580,17 @@ class Emote(object):
                                            'emphatic' : self.emphatic, 'sarcastic' : self.sarcastic, 'instructive' : self.instructive, 'accusative' : self.accusative,
                                            'admiration' : self.admiration, 'inquisitive' : self.inquisitive, 'modest' : self.modest, 'pride' : self.pride,
                                            'ambivalence' : self.ambivalence, 'vulgarity' : self.vulgarity})
-                self.normalizeProbabilityPunctuation(_message)
+                self.normalizeProbabilityPunctuation (_message)
+                # return self.normalizedProbValues
+                # return self.prob_dist, self.prob_dist_max, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
                 return self.normalizedProbValues, self.prob_dist, self.prob_dist_max, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
 
 
 
     def normalizeProbabilityPunctuation (self, _message):
             print("\tNow normalizing probability based on punctuation count..")
+            # print("\n\t", self.punctCountDict)
+            # print("\tNow normalizing probability based on punctuation count..")
             ############################################################################################################################################################
             # Base values below. Variables will be scaled off of linearly increasing relationships based off these values below, to determine different probability ranges. 
             minWordCountRange = 0
@@ -660,6 +718,20 @@ class Emote(object):
 
         normalizedProbValTemp = self.normalizedProbValues
 
+        normalizedProbValTemp = self.normalizedProbValues
+
+        self.normalizedProbValues = preprocessing.RobustScaler(with_centering=True, with_scaling=True, quantile_range=(50.0, 100.0), copy = True).fit_transform(normalizedProbValTemp)
+        normalizedProbValTemp = self.normalizedProbValues
+        self.normalizedProbValues = preprocessing.StandardScaler(with_mean = False, with_std = False).fit_transform(normalizedProbValTemp)
+        normalizedProbValTemp = self.normalizedProbValues
+      
+        self.normalizedProbValues = preprocessing.normalize(normalizedProbValTemp, norm = 'max')
+        normalizedProbValTemp = self.normalizedProbValues
+        self.normalizedProbValues = np.array(normalizedProbValTemp).tolist()
+        normalizedProbValTemp = self.normalizedProbValues
+
+        # LIST BELOW IS SORTED ALPHABETICALLY BECAUSE OF HOW NUMPY DOES IT
+
         normalizedAccusative = normalizedProbValTemp[0][0]; normalizedAdmiration = normalizedProbValTemp[0][1]; 
         normalizedAgreeable = normalizedProbValTemp[0][2]; normalizedAmbivalence = normalizedProbValTemp[0][3]; 
         normalizedAmusement = normalizedProbValTemp[0][4]; normalizedAnger = normalizedProbValTemp[0][5]; 
@@ -704,6 +776,7 @@ class Emote(object):
         normalizedProbValTemp['modest'] = self.modest; normalizedProbValTemp['pride'] = self.pride;        
         normalizedProbValTemp['ambivalence'] = self.ambivalence; normalizedProbValTemp['vulgarity'] = self.vulgarity;
 
+        # print("\n\n\t", normalizedProbValTemp)
         self.normalizedProbValues = normalizedProbValTemp
         normalizedProbValTemp = sorted(self.normalizedProbValues.items(), key=operator.itemgetter(1), reverse = True)
         self.normalizedProbValues = normalizedProbValTemp
@@ -715,6 +788,11 @@ class Emote(object):
             self.getInput(_message)
             return self.normalizedProbValues, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
 
+        print("\n\t",self.normalizedProbValues)
+        if runningScript == True:
+            self.getInput(_message)
+            return self.normalizedProbValues, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
+        # self.normalizeProbabilityPunctuation(_message)
         return self.normalizedProbValues, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
 
 
