@@ -19,12 +19,12 @@ em = emote.Emote()
 firstTime = True
 
 
-@app.route("/api/chat", methods=['POST'])
-def giveResponse():
-    text = get_text(request)
-    em.getInput(text)  # Polarity score
-    sentiment = em.normalizedProbValues
-    return jsonify({"result": sentiment})
+# @app.route("/api/chat", methods=['POST'])
+# def giveResponse():
+#     text = get_text(request)
+#     em.getInput(text)  # Polarity score
+#     sentiment = em.normalizedProbValues
+#     return jsonify({"result": sentiment})
 
 
 ##### TextBlob API #####
@@ -34,15 +34,6 @@ def sentiment():
     em.getInput(text)  # Polarity score
     sentiment = em.normalizedProbValues
     return jsonify({"result": sentiment})
-
-
-@app.route("/api/noun_phrases", methods=['POST'])
-def noun_phrases():
-    text = get_text(request)
-    noun_phrases = set(TextBlob(text).noun_phrases)
-    # Strip punctuation from ends of noun phrases and exclude long phrases
-    stripped = [strip_punc(np) for np in noun_phrases if len(np.split()) <= 5]
-    return jsonify({"result": stripped})
 
 
 @app.route("/api/sentiment/sentences", methods=['POST'])
@@ -80,6 +71,7 @@ def home():
         pass
     return current_app.send_static_file('templates/emote-home.html')
 
+
 # Upload CSV for Emote mass analysis
 def allowed_file(filename):
     return '.' in filename and \
@@ -93,10 +85,7 @@ def upload_file():
         if 'file' not in request.files:
             flash('No file part')
             return current_app.send_static_file('templates/emote-home.html')
-            # return redirect(request.url)
         file = request.files['file']
-        # em.firstTime = True
-        # em.emoteClassOn = True
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
@@ -109,16 +98,16 @@ def upload_file():
             return redirect(url_for('static',
                                     filename="results.csv"))
 
-
 @app.route('/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                "results.csv")
 
+
 @app.route('/<path:path>')
 def static_file(path):
     return app.send_static_file(path)
-    
+
 
 if __name__ == '__main__':
     app.run(threaded=True, host='0.0.0.0')
