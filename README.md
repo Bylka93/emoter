@@ -106,13 +106,13 @@ To train Emote's classifier, you will have to copy and paste all the lines in ba
 
 When you've finished editing emote.py, run the script and the training will begin automatically. 
 
-<img src="/screenshots/emote-training-base-corpus-into-pickle.png?raw=true" width="300px" />
+<img src="/screenshots/emote-training-base-corpus-into-pickle.png?raw=true" width="600px" />
 
 When the classifier has finished training, it will automatically be saved into a pickle file in /data, to be loaded into Emote so the model doesn't have to be rebuilt every time.
 
 See the image below for a reference to how quotations in the base corpus were trained:
 
-<img src="/docs/emote-training-database-description.png?raw=true" width="600px" />
+<img src="/docs/diagrams/emote-training-database-description.png?raw=true" width="600px" />
 
 
 ## Using Emote (Sentiment Analysis)
@@ -308,7 +308,7 @@ See the below image for to see all the new files generated you should have in yo
 <img src="/screenshots/facebook_corpus_files.png?raw=true" width="600px" />
 
 Opening "new_msgs_db.db" should give you a data set with two columns: 'other' and 'profile'.
-<img src="/screenshots/facebook_corpus_db_final.png?raw=true" width="600px" />
+<img src="/screenshots/facebook_corpus_db_final.png?raw=true" width="300px" />
 
 Select the entirety of the database in DB Browser, and copy and paste the contents into the texts_all.txt file in Emoter's corpus (make sure to put it in a separate brain folder, and specify the path name of the brain).
 
