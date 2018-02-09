@@ -111,7 +111,7 @@
             <div class="row">
 
                     <div class="col-sm-6" style = "float: left; text-align: center">
-                             <p style = "">Welcome to the demo version of Emoter's artifical intelligence management system!</p>
+                             <p style = "">Welcome to the demo version of Emoter's artifical intelligence management system! (Note: This chatbot brain running now only has a couple of dozen respones it can choose, as the older, more expanded demo is no longer available)</p>
                              <p style = "">Emotionally<br>
                                                   Machinated<br>
                                                   Operative<br>
@@ -120,7 +120,7 @@
                                                   Recognition
                                                     </p> 
 
-                   <a href="#" onclick="$('#text_response').val('This digital / physical exhibit, entitled A Poor Sort of Memory That Only Works Backwards, was created as part of my undergraduate thesis at Parsons School of Design. The aesthetic of the site and the monitor (CRT) is meant to be anachronistic, as though you were using this software back in 1991, but in an alternate, more advanced but still very familiar timeline, when maybe the Library of Alexander never burned, or when the Mongols never invaded China, or when the Archduke Ferdinand had never been assassinated. Emoter is a chatbot with empathy, built in Python with a sentiment analyzer classifying ten thousand quotes from literature and film. Messages are analyzed for their emotions before the bot picks the corresponding text category to respond with. The dialog fed into this chatbot has been automatically generated from my Facebook messages from the years 2011-2014 (sorry for the offensivenss; the messages are raw and unfiltered). Thus, the experience of the conversation essentially acts like an interactive diary. This chatbot will only be available during the time this gallery is open, to better protect the privacy of the individuals in the conversations. There are over 70,000 responses stored. And most will probably not make any sense. Visit https://github.com/jddunn/emoter at your leisure for more information or to create your own Emoter bot after the show!');" class="btn btn-outline btn-xl page-scroll" style = "margin: 0; padding: 0; margin-top: 10px;">Learn More About How Emoter Works</a>
+                   <a href="#" onclick="$('#text_response').val('This digital / physical exhibit, entitled A Poor Sort of Memory That Only Works Backwards, was created as part of my undergraduate thesis at Parsons School of Design. The aesthetic of the site and the monitor (CRT) is meant to be anachronistic, as though you were using this software back in 1991, but in an alternate, more advanced but still very familiar timeline, when maybe the Library of Alexander never burned, or when the Mongols never invaded China, or when the Archduke Ferdinand had never been assassinated. Emoter is a chatbot with empathy, built in Python with a sentiment analyzer classifying ten thousand quotes from literature and film. Messages are analyzed for their emotions before the bot picks the corresponding text category to respond with. The dialog fed into this chatbot has been automatically generated from my Facebook messages from the years 2011-2014 (sorry for the offensivenss; the messages are raw and unfiltered). Thus, the experience of the conversation essentially acts like an interactive diary. This chatbot will only be available during the time this gallery is open, to better protect the privacy of the individuals in the conversations. There are over 70,000 responses stored. And most will probably not make any sense. Visit <a href = https://github.com/jddunn/emoter at your leisure for more information or to create your own Emoter bot after the show!');" class="btn btn-outline btn-xl page-scroll" style = "margin: 0; padding: 0; margin-top: 10px;">Learn More About How Emoter Works</a>
 
 
                     </div>
@@ -197,7 +197,7 @@
 function updateClock() {
     var currentDate = Date();
 	document.getElementById("dateTime").innerHTML = 
-    currentDate = currentDate.replace("2017", 1991);
+    currentDate = currentDate.replace("2018", 1991);
 }
 setInterval(updateClock, 1000);
 
@@ -231,14 +231,14 @@ $("#main-text").submit(function(e){
                 }
                 // IF the Emoter bot can't find a response, it returns nothing (blank)
                 if (response.res == "") {
-                    response.res = "Couldn't find an appropriate response.. try again? I'm pretty broken, too, just like you.";                 
+                    response.res = "Couldn't find an appropriate response.. try again? I'm pretty broken, too, just like you. (Note: After May 2017, the chatbot running in this demo was replaced with a limited corpus with only a couple dozen responses, so there's not much of a conversation)";                 
                         }
                         $('#text_response').val(response.res);
             },
             error: function(error) {
                     console.log(error);
                     $('#text_input').val('');
-                    $('#text_response').val("Couldn't find an appropriate response.. try again? I'm pretty broken, too, just like you.");
+                    $('#text_response').val("Couldn't find an appropriate response.. try again? I'm pretty broken, too, just like you. (Note: After May 2017, the chatbot running in this demo was replaced with a limited corpus with only a couple dozen responses, so there's not much of a conversation)");
             }
         });
         return false
