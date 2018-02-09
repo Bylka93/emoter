@@ -22,7 +22,6 @@ def get_sentiment(text_input):
     sentiment = em.normalizedProbValues
     return jsonify({"result": sentiment})
 
-
 @app.route("/api/sentiment/sentences/<string:text_input>", methods=['GET'])
 def get_sentences_sentiment(text_input):
     em.split_into_sentences(text_input)
@@ -39,7 +38,6 @@ def sentiment():
     em.getInput(text)  # Polarity score
     sentiment = em.normalizedProbValues
     return jsonify({"result": sentiment})
-
 
 @app.route("/app/sentiment/sentences", methods=['POST'])
 def sentences_sentiment():
@@ -78,7 +76,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-
 @app.route('/', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
@@ -99,7 +96,6 @@ def upload_file():
             return redirect(url_for('static',
                                     filename="results.csv"))
 
-
 @app.route('/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
@@ -109,7 +105,6 @@ def uploaded_file(filename):
 @app.route('/<path:path>')
 def static_file(path):
     return app.send_static_file(path)
-
 
 
 if __name__ == '__main__':
