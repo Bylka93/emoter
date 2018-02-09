@@ -10,7 +10,6 @@ from flask import send_from_directory
 UPLOAD_FOLDER = '/'
 ALLOWED_EXTENSIONS = set(['csv'])
 
-
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -19,16 +18,24 @@ em = emote.Emote()
 firstTime = True
 
 
-# @app.route("/api/chat", methods=['POST'])
-# def giveResponse():
-#     text = get_text(request)
-#     em.getInput(text)  # Polarity score
-#     sentiment = em.normalizedProbValues
-#     return jsonify({"result": sentiment})
+@app.route("/api/sentiment/<string:text_input>", methods=['GET', 'POST'])
+def get_sentiment(text_input):
+    em.getInput(text_input)  # Polarity score
+    sentiment = em.normalizedProbValues
+    return jsonify({"result": sentiment})
 
 
-##### TextBlob API #####
-@app.route("/api/sentiment", methods=['POST'])
+@app.route("/api/sentiment/sentences/<string:text_input>", methods=['GET', 'POST'])
+def get_sentences_sentiment(text_input):
+    em.split_into_sentences(text_input)
+    sentencesResults = em.sentencesProbValues
+    sentencesText = em.sentences
+    sentencesResultsFinal = dict(zip(sentencesText, sentencesResults))
+    # sentencesResults = [{"sentence": s, "sentiment": emote_trainer_wrapper.massResults[t]} for s, t in emote_trainer_wrapper.sentences]
+    return jsonify({"results": sentencesResultsFinal})
+
+
+@app.route("/app/sentiment", methods=['POST'])
 def sentiment():
     text = get_text(request)
     em.getInput(text)  # Polarity score
@@ -36,7 +43,7 @@ def sentiment():
     return jsonify({"result": sentiment})
 
 
-@app.route("/api/sentiment/sentences", methods=['POST'])
+@app.route("/app/sentiment/sentences", methods=['POST'])
 def sentences_sentiment():
     text = get_text(request)
     # blob = TextBlob(text)
@@ -110,4 +117,4 @@ def static_file(path):
 
 
 if __name__ == '__main__':
-    app.run(threaded=True, host='0.0.0.0')
+    app.run(threaded=True, host='0.0.0.0', port=5000)

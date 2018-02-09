@@ -53,7 +53,7 @@ class Emote(object):
 
         self.train = train
 
-        # PLACE THE TRAINING DATA (TUPLES) IN SELF.TRAIN BELOW
+        # PLACE THE TRAINING DATA (LIST OF TUPLES) IN SELF.TRAIN BELOW TO TRAIN THE CLASSIIFER (WILL AUTOMATICALLY BE SERIALIZED INTO PICKLE FILE)
         # self.train = [
 
         # ]

@@ -1,21 +1,19 @@
-# Emoter / Emote
+# Emoter / Emote - Sentiment analysis and chatbot libraries
 
-Last updated on May 20, 2017
+Last updated on Februrary 8, 2018
 
-Here's a link to the Medium post about the development of Emoter throughout my undergrad senior year:
+[How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy](https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd)
 
-"How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy"
+This repository contains the full source code for a sentiment analyzer library called Emote, and its companion program Emoter, a chatbot intergrated with Emote's emotional analysis to allow for some programmatic sense of "empathy."
 
-https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd
+Emote uses NLTK's (through TextBlob's wrapper) naive Bayes classifier, and was trained on over 8000 quotations from various film, literature, and digital sources of dialogues. There are a total of 26 different emotional tone classifications currently, with an additional 10 further tones that can be extrapolated from clustering / grouping related tones. Emote can be run with a CLI, or used as a library, and includes a basic REST API.
 
-This repository contains the full source code for a sentiment analyzer library called Emote, and its companion program Emoter, a chatbot library intergrated with Emote that allows it to empathize with the users talking to it. Emote is based off TextBlob's (NLTK's) naive Bayes probability system, and is able to detect reasonably accurate values for 3-6 different emotional tones, from 26 (36 eventually) classifications. Emoter chatbot agents use Emote to analyze user messages, then choose an emotionally appropriate response from interchangable "conversations", based around designed personalities / personas. Emoter includes a      (mostly) automated way of parsing downloaded Facebook messages to build a text corpus off an individual person's Facebook profile. This project developed for my undergraduate thesis at Parsons School of Design.
+Emoter includes a (mostly) automated way of parsing Facebook messages to build a text corpus off an individual person's Facebook profile, inspired by [Black Mirror](https://tv.avclub.com/black-mirror-be-right-back-1798178877). Emoter chatbots can be run with a CLI, or used as a library.
+
+These works were developed for my undergraduate thesis project at Parsons School of Design in 2017.
 
 
-## Note
-
-Emote / Emoter are open-sourced under the MIT License.
-
-### Screenshots
+## Screenshots
 
 Emoter bot built with my own personality by using my Facebook messages for its corpus.
 <img src="/screenshots/emoter-fb-johnny-demo-web.gif?raw=true" width="680px" />
@@ -26,21 +24,23 @@ Emoter bot built with my own personality by using my Facebook messages for its c
 
 <img src="/screenshots/emoter_demo_5.png?raw=true" width="600px" />
 
-### Prerequisites
+## Prerequisites
 
-* Windows / Mac (Untested on Linux)
 * Python 3.5 or higher
-* Pip / virtual environments (Pip not required if installing via setup.py)
+* TextBlob
+* NLTK
+* NumPy
+* pandas
+* scikit-learn
 
 
 ## Introduction
 
-Emote uses the TextBlob / NLTK, NumPy, SciPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then encompass more values as well as decrease false positives. Based off these tone clusters, a further 10 additional tone classifications are derived.
+Emote uses the TextBlob / NLTK, NumPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then lead to further tone classifications (currently for a total of 36), as well as decrease false positive detections.
 
-Emoter is a basic but functional chatbot library intergrated with Emote, in order to give chatbot agents the ability to empathize with users and give back emotionally appropriate responses. Emoter agents thus can operate on a "higher level of thinking", by first categorizing messages and then choosing specific, interchangable "conversations" (lists of text responses) to respond from based on certain emotional tones. Within these conversations, Emoter looks for matching text in its database and compares it with the user input on a sliding threshold, outputting the corresponding response if the threshold is met. 
+Emoter is a basic but functional chatbot library intergrated with Emote, in order to give conversational agents the ability to better empathize with users and give back more emotionally appropriate responses. Emoter chatbots can operate on a "higher" level of thinking, by first categorizing messages and then choosing specific, interchangable "conversations" (lists of text responses) to respond from based on detected emotions in user messages.
 
-Both Emote and Emoter can be run offline. While Emoter's responses are completely pre-written as of now, plans for developing an "improvisation" feature through using Markov chains and / or a neural network is in the works.
-
+Both Emote and Emoter can be run offline. Emote comes with a REST API for basic sentiment analysis, and has a mass analysis feature (currently only supporting CSV and text files).
 
 ### Full List of Emotional Tone Classifications
 
@@ -55,41 +55,107 @@ Positive, negative; love, hate; joy, anger; certainty, confusion; amusement, bor
 <img src="/screenshots/emoter-empathy-diagram.png?raw=true" width="300px" />
 
 
-### Installing
+## Installing
 
 Once you create your virtual environment, run the setup file or install the dependencies via pip. 
 
-All packages should install fine, but on Windows and Mac (and possibly Linux? ha), for NumPy and SciPy, you will need to manually download the packages with mkl, here:
+```
+pip install -r requirements.txt
+```
+
+On Windows and Mac, you will have to manually install NumPy+MKL.
+
+Go to these links below to download NumPy+MKL and SciPy+MKL packages.
 
 [http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy](http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy)
 
 [http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy](http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy)
 
-In command line or Terminal, cd to the directory where the whl files are, and run this command and install both packages:
+Cd to the directory where the whl files are while in your virtual env, and run this command to install the packages:
 ```
-pip install package_name.whl
+pip install package_name_downloaded_here.whl
 ```
 
-Then, download the necessary corpus to use TextBlob:
+Then, download the necessary corpora to use TextBlob:
 ```
 python -m textblob.download_corpora
 ```
-Because GitHub has a file upload limitation, and to save space, I've uploaded a pickled version of the probability classifier, so that it doesn't have to rebuild every time Emote is reloaded. 
 
-Now download the pickled classifier file (so the data doesn't have to be re-trained every time).
+<!-- Because GitHub has a file upload limitation, and to save space, I've uploaded a pickled version of the probability classifier, so that it doesn't have to rebuild every time Emote is reloaded.  -->
+
+<!-- Now download the pickled classifier file (so the data doesn't have to be re-trained every time). -->
+
+<!-- [http://www.mediafire.com/file/c18ll802ynb7s3c/base_corpus.pickle](http://www.mediafire.com/file/c18ll802ynb7s3c/base_corpus.pickle) -->
+
+<!-- Put the pickle file in the /data directory of Emoter / Emote, or build the pickled file yourself with your own custom database automatically by running emote.py. -->
+
+<!-- NOTE: You may have to train your own model based on the data in the repo.  -->
+
+
+## Training the Model
+
+Because GitHub has a file upload limitation, and to save space, I've uploaded a pickled version of the probability classifier here:
 
 [http://www.mediafire.com/file/c18ll802ynb7s3c/base_corpus.pickle](http://www.mediafire.com/file/c18ll802ynb7s3c/base_corpus.pickle)
 
-<!-- http://www.mediafire.com/file/c18ll802ynb7s3c/base_corpus.pickle -->
+When upgrading to the latest library updates, the classifier was throwing errors for me when loading the downloaded pickled model.
 
-Put the pickle file in the /data directory of Emoter / Emote, or build the pickled file yourself with your own custom database automatically by running emote.py.
+You should be able to put the pickle file in the /data directory within Emote, but that doesn't seem to be the case now.
 
-Now you can use both Emote and Emoter libraries.
+To train Emote's classifier, you will have to copy and paste all the lines in base_corpus.txt within /data into the list var 'self.train', initialized in the beinning of emote.py. So, self.train will then be a list of tuples comprised of the data from base_corpus.txt. In the future, this will be changed so each line is read from the corpus text into Emote when it's initialized (at the moment, unicode errors seem to be messing that up).
+
+When you've finished editing emote.py, run the script and the training will begin automatically. 
+
+<img src="/screenshots/emote-training-base-corpus-into-pickle.png?raw=true" width="300px" />
+
+When the classifier has finished training, it will automatically be saved into a pickle file in /data, to be loaded into Emote so the model doesn't have to be rebuilt every time.
+
+See the image below for a reference to how quotations in the base corpus were trained:
+
+<img src="/docs/emote-training-database-description.png?raw=true" width="600px" />
 
 
 ## Using Emote (Sentiment Analysis)
 
-Emote can be run as a script with a CLI, or imported as a module / library. Run_emote.py starts Emote's web app interface, where you can demo the sentiment analysis and mass analyze CSV files. Emoter_trainer_wrapper.py offers a more advanced CLI for Emote, and is meant to be used to train and test Emote's database, but is not functional yet. When you're running Emote for the first time, it'll automatically analyze an empty message, so that the initial loading of the classifier is done (the initial loading takes longer to load).
+Emote.py will start the basic command line interface.
+
+Emoter_trainer_wrapper.py offers a more advanced CLI for Emote, and is meant to be used to train and test Emote's database, but is not functional yet. 
+
+Run_emote.py starts Emote's app (Flask) and REST API. Go to localhost:5000/ in your browser to use the web interface.
+
+When you're running Emote for the first time, it'll automatically analyze an empty message, so that the initial loading of the classifier is done (so the first analysis made will take longer to finish).
+
+### REST Usage
+
+Run_emote.py starts the app by default on port 5000. Deployed locally, you can use the API as follows:
+
+#### Sentiment analysis for single sentences:
+
+```
+api/sentiment/<text>
+```
+
+returns JSON list of 26 base emotional tones and their percentage levels.
+
+#### Sentiment analysis for 26 tones for multiple sentences / paragraphs:
+
+```
+api/sentiment/sentences/<text>
+```
+
+returns JSON list of each sentence found in the text with classified sentiments.
+
+#### Example:
+
+```
+http://localhost:5000/api/sentiment/My cherries and wine, rosemary and thyme And all of my peaches are ruined
+```
+
+returns:
+
+{ "result": [ [ "intensity", 100.0 ], [ "agreeable", 44.800000000000004 ], [ "inquisitive", 24.099999999999998 ], [ "emphatic", 24.0 ], [ "anger", 19.1 ], [ "certainty", 14.7 ], [ "challenging", 11.200000000000001 ], [ "instructive", 6.0 ], [ "hate", 4.6 ], [ "accusative", 4.6 ], [ "desire", 3.1 ], [ "positive", 1.7000000000000002 ], [ "confusion", 1.6 ], [ "negative", 0.4 ], [ "calm", 0.4 ], [ "vulgarity", 0.4 ], [ "joy", 0.0 ], [ "love", 0.0 ], [ "amusement", 0.0 ], [ "boredom", 0.0 ], [ "regret", 0.0 ], [ "sarcastic", 0.0 ], [ "admiration", 0.0 ], [ "modest", 0.0 ], [ "pride", 0.0 ], [ "ambivalence", 0.0 ] ] }
+
+### Library Usage
 
 Start by importing emote.
 ```
@@ -139,7 +205,9 @@ returns the 2nd strongest tone classification-value pair:
 ```
 and so on for all 26 base tones, in descending order of value. Eventually, the API will be expanded to return more data like a descriptive psychological analysis, hence why the result is returned as a list.
 
-To use Emote's web interface and mass analyzer feature (for CSV data input / output), start run_emoter.py, and go to localhost:5000 in your browser:
+### Web UI
+
+To use Emote's web interface and mass analyzer feature (for CSV data input / output), start run_emoter.py, and go to localhost:5000/ in your browser:
 
 <img src="/screenshots/emote-web-demo-1.png?raw=true" width="600px" />
 
@@ -148,7 +216,7 @@ To use Emote's web interface and mass analyzer feature (for CSV data input / out
 
 ## Using Emoter (Chatbot)
 
-Emoter can be run as a script with a CLI, or used as a module / library in Python. By default, Emoter's corpus consists of example texts for a virtual fitness coach / trainer. To customize or make your own chatbot, you can add a new 'brain' in the /data folder, using the 'fitness_coach' files as a template. Emoter brains currently consist of a folder of text files comprised of tuples (eventually, the brains will use SQL).
+Emoter can be run as a script with a CLI, or used as a library in Python. By default, Emoter's corpus consists of example texts for a virtual fitness coach / trainer. To customize or make your own chatbot, you can add a new 'brain' in the /data folder, using the 'fitness_coach' files as a template. Emoter brains currently consist of a folder of text files comprised of tuples (eventually, the brains will use SQL).
 
 Start by importing emoter.
 ```
@@ -163,7 +231,7 @@ result = emtBot.getMsg(message)
 You will get a string returned with Emoter's matching response statement to your message.
 ```
 print(result)
-Hello! Yes, I'm here! How can I help you?
+Hello, how can I help you?
 ```
 
 This is what the dir structure for an Emoter bot corpus looks like (example corpus, 'fitness_coach', which loads by default):
@@ -207,8 +275,7 @@ To use Emoter's web interface (which was built for an art exhibit to be displaye
 
 <img src="/screenshots/emoter-web-demo-2.png?raw=true" width="600px" />
 
-
-## Generating an Emoter corpus from Facebook messages
+### Generating an Emoter corpus from Facebook messages
 
 First of all, this system does not work especially well, and is pretty hacked together. Follow at your own caution.
 
@@ -253,49 +320,27 @@ Delete all the db and CSV and other files created in the process to clean up.
 Right now, there is no automated classification of the the Facebook corpus to be used in Emoter's empathy. You currently can only do that manually.
 
 
-### Training / Adding Your Own Emote Corpus
-
-Follow this quick visual guide to understand how the base corpus has been trained.
-
-<img src="/docs/emote-training-database-description.png?raw=true" width="600px" />
-
-Also, see the file 'alice_classification_training_sample.txt' to see passages from Alice in Wonderland classified through with Emote's tones.
-
-Right now, you have to copy and paste all the training data (structured as tuples) into the list varible 'self.train' in emote.py, if you are building your own corpus or expanding the base knowledge. Taking in the tuples from a text file was giving me unicode errors; must fix this later. 
-
-
-### Current Limitations
+## Current Limitations
 
 * System for deriving 10 additional tones from base 26 has not yet been implemented
-* Database is too young (<8000 classifications) to be consistently accurate
-* Emoter agents are only deployable in Python
-* Emoter agents have no ability to remember or learn new things
 * Emoter agents only search for one matching database, not multiple. If the threshold fails, then Emoter will just search the entire database.
-* Conversations / texts are just lists of tuples, which is too limiting of a data structure
-* No automated way of training Facebook database for Emoter's empathetic functionality
+* Conversations / texts are just lists of tuples, which is too limiting of a data structure to support future features, like conversation threading
+* No automated way of training Facebook messages database for Emoter's "empathic" responses
 
 
-### Future Plans
+## Future Plans
 
 * Functionality to automatically load interchangable databases / corpuses (Pickled files) to narrow down contexts in Emote
 * Add an "improvisation" feature for Emoter agents to build new dialog through Markov chains and / or neural networks
-* Incorporate machine learning and accuracy testing into Emote's database
-* Develop automated way of training databases (described in architecture flowchart in /docs)
-* Build out a full RESTful API for Emote, and offer plans for developers / businesses for API calls via Emoter website
+* Develop automated way of training databases 
 * Develop a GUI web interface to create / customize Emoter chatbot agents
-* Fix database matching to multiple (going in descending order) instead of just one
-* Rework conversations / texts data structure into SQL, with added frequency / weight values for more complexity
-* Implement short-term memory functionality for Emoter agents
+* Implement short-term memory functionality for Emoter agents by keeping track of occurences of conversational "tags" in a database
 * Improve sequence matching by incorporating automatic addition of synonyms for words and phrases
 * Build a Unity SDK for Emote / Emoter
 * Incorporation with speech recognition and speech synthesis
 * Incorporation with computer vision
 
-
-## Deployment
-
-Eventually, an RESTful API will be developed through Flask for both Emote and Emoter.
-
+<!-- ## Deployment -->
 
 <!-- ## Contributing -->
 
@@ -310,23 +355,10 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 * **Johnny Dunn** - *Initial work* - [jddunn](https://github.com/jddunn)
 * **Shubhank Sahay** - *Personas Development for Emoter - Fitness Coach; Corpus training contributions*
 
-Other thanks:
-
-Kyle Li — Sven Travis — Brad McDonald — Ernesto Klarr
-Han Shen Chen — Wei Wei — Benjamin Norskov
-Gentry Demchak — John Delguidice — Nicholas Elia
-Andrew Benson — Kate Wallace — Danny Dang — Alex Addington-White 
-Jasmine Martinez — Rafael Alam — Shiqi Shen — Yumeng Wang
-Yi Tang — Adam McBride — Elizabeth Peralta — Enayet Kabir
-Keiji Kimura — Kim Carl Daniel Koehler — Orien Longo — Willie Quiroz
-Nicole Shin Tong Shi — Marco Weibel— Aidain Kaye — Daniel Kaye
-John Sharpe — Nicholas Fortugno — Michael Wolf — Ayo Okunseinde
-Anthony Marefat — Lucy Matchett — Alexandra Tosti
-
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Both Emote and Emoter are under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 
 ## References

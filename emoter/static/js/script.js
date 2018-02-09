@@ -53,7 +53,7 @@
 
     var updateNounPhrases = function(text){
         $nounList = $("#nounPhrasesValue");
-        updateValue("api/noun_phrases", text, $nounList, function(res){
+        updateValue("app/noun_phrases", text, $nounList, function(res){
             $nounList.empty();
             var nounPhrases = res.result;
             if (!text) {
@@ -72,7 +72,7 @@
     var updateSentiment = function(text){
         $sentValue = $("#sentimentValue");
         $("#sentencesSentiment").hide();
-        updateValue("api/sentiment", text, $sentValue, function(res) {
+        updateValue("app/sentiment", text, $sentValue, function(res) {
             $sentValue.empty();
             if (!text){
                 $("#breakdown").hide();
@@ -106,7 +106,7 @@
             $sentDiv.show();
             var $sentTable = $("#sentencesSentiment table");
             var $tbody = $sentTable.children("tbody");
-            updateValue("api/sentiment/sentences", text, $tbody, function(res){
+            updateValue("app/sentiment/sentences", text, $tbody, function(res){
                 $sentBtn.addClass("active");
                 $tbody.empty();
                 var sentences = res.results;
