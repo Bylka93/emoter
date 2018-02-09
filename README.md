@@ -150,10 +150,10 @@ returns JSON list of each sentence found in the text with classified sentiments.
 ```
 http://localhost:5000/api/sentiment/My cherries and wine, rosemary and thyme And all of my peaches are ruined
 ```
-
 returns:
-
+```
 { "result": [ [ "intensity", 100.0 ], [ "agreeable", 44.800000000000004 ], [ "inquisitive", 24.099999999999998 ], [ "emphatic", 24.0 ], [ "anger", 19.1 ], [ "certainty", 14.7 ], [ "challenging", 11.200000000000001 ], [ "instructive", 6.0 ], [ "hate", 4.6 ], [ "accusative", 4.6 ], [ "desire", 3.1 ], [ "positive", 1.7000000000000002 ], [ "confusion", 1.6 ], [ "negative", 0.4 ], [ "calm", 0.4 ], [ "vulgarity", 0.4 ], [ "joy", 0.0 ], [ "love", 0.0 ], [ "amusement", 0.0 ], [ "boredom", 0.0 ], [ "regret", 0.0 ], [ "sarcastic", 0.0 ], [ "admiration", 0.0 ], [ "modest", 0.0 ], [ "pride", 0.0 ], [ "ambivalence", 0.0 ] ] }
+```
 
 ### Library Usage
 
