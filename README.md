@@ -125,7 +125,7 @@ Run_emote.py starts Emote's app (Flask) and REST API. Go to localhost:5000/ in y
 
 When you're running Emote for the first time, it'll automatically analyze an empty message, so that the initial loading of the classifier is done (so the first analysis made will take longer to finish).
 
-### REST Usage
+### REST API Usage
 
 Run_emote.py starts the app by default on port 5000. Deployed locally, you can use the API as follows:
 
