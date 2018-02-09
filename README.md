@@ -98,11 +98,15 @@ Because GitHub has a file upload limitation, and to save space, I've uploaded a 
 
 [http://www.mediafire.com/file/c18ll802ynb7s3c/base_corpus.pickle](http://www.mediafire.com/file/c18ll802ynb7s3c/base_corpus.pickle)
 
-When upgrading to the latest library updates, the classifier was throwing errors for me when loading the downloaded pickled model.
+When upgrading to the latest library updates, the classifier was throwing errors for me when loading a downloaded (pre-built) pickled model.
 
 You should be able to put the pickle file in the /data directory within Emote, but that doesn't seem to be the case now.
 
-To train Emote's classifier, you will have to copy and paste all the lines in base_corpus.txt within /data into the list var 'self.train', initialized in the beinning of emote.py. So, self.train will then be a list of tuples comprised of the data from base_corpus.txt. In the future, this will be changed so each line is read from the corpus text into Emote when it's initialized (at the moment, unicode errors seem to be messing that up).
+To train Emote's classifier, you will have to copy and paste all the lines in base_corpus.txt (or whatever your corpus is called) within /data into the list var 'self.train', initialized in the beginning of emote.py. So, self.train will then be a list of tuples comprised of the data from base_corpus.txt. 
+
+<img src="/screenshots/emote-train-copy-and-paste-here.png?raw=true" width="600px" />
+
+In the future, this will be changed so each line is read from a selected corpus text into Emote when it's initialized (at the moment, reading the base corpus text into a list gives errors with escaped chars in).
 
 When you've finished editing emote.py, run the script and the training will begin automatically. 
 
