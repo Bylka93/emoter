@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, render_template, abort, redirect, url
 from werkzeug.utils import secure_filename
 
 import emote
+import emoter
 
 UPLOAD_FOLDER = '/'
 ALLOWED_EXTENSIONS = set(['csv'])
@@ -11,8 +12,10 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 em = emote.Emote()
+emt = emoter.Emoter(brain_path="fitness_coach")
 
 firstTime = True
+
 
 @app.route("/api/sentiment/<string:text_input>", methods=['GET'])
 def get_sentiment(text_input):
@@ -68,8 +71,6 @@ def home():
         firstTime = False
         # Runs Emote for the first time to load the initial pickled data (first time analysis is always slower)
         em.getInput("")
-    else:
-        pass
     return current_app.send_static_file('templates/emote-home.html')
 
 
@@ -113,4 +114,4 @@ def static_file(path):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, threaded=True, debug=True)
+    app.run(host='0.0.0.0', port=8080, threaded=True)

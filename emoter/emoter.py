@@ -351,14 +351,14 @@ class Emoter(object):
     def parseMessage(self, _message):
         tone_1 = ""; tone_2 = ""; tone_3 = ""; tone_4 = ""; tone_5 = ""; tone_6 = ""; tone_7 = ""; tone_8 = ""
         tone_1_val = 0; tone_2_val = 0; tone_3_val = 0; tone_4_val = 0; tone_5_val = 0; tone_6_val = 0; tone_7_val = 0; tone_8_val = 0
-        tone_1 = self.msg_em_results[0][0][0]; tone_1_val = self.msg_em_results[0][0][1]; 
-        tone_2 = self.msg_em_results[0][1][0]; tone_2_val = self.msg_em_results[0][1][1] 
-        tone_3 = self.msg_em_results[0][2][0]; tone_3_val = self.msg_em_results[0][2][1] 
-        tone_4 = self.msg_em_results[0][3][0]; tone_4_val = self.msg_em_results[0][3][1] 
-        tone_5 = self.msg_em_results[0][4][0]; tone_5_val = self.msg_em_results[0][4][1] 
-        tone_6 = self.msg_em_results[0][5][0]; tone_6_val = self.msg_em_results[0][5][1] 
-        tone_7 = self.msg_em_results[0][6][0]; tone_7_val = self.msg_em_results[0][6][1] 
-        tone_8 = self.msg_em_results[0][7][0]; tone_8_val = self.msg_em_results[0][7][1] 
+        tone_1 = self.msg_em_results[0][0]; tone_1_val = self.msg_em_results[0][1]; 
+        tone_2 = self.msg_em_results[1][0]; tone_2_val = self.msg_em_results[1][1] 
+        tone_3 = self.msg_em_results[2][0]; tone_3_val = self.msg_em_results[2][1] 
+        tone_4 = self.msg_em_results[3][0]; tone_4_val = self.msg_em_results[3][1] 
+        tone_5 = self.msg_em_results[4][0]; tone_5_val = self.msg_em_results[4][1] 
+        tone_6 = self.msg_em_results[5][0]; tone_6_val = self.msg_em_results[5][1] 
+        tone_7 = self.msg_em_results[6][0]; tone_7_val = self.msg_em_results[6][1] 
+        tone_8 = self.msg_em_results[7][0]; tone_8_val = self.msg_em_results[7][1] 
         self.msg_em_results_dict_full = {}
         self.msg_em_results_dict_full['tone_1'] = [tone_1, tone_1_val]; self.msg_em_results_dict_full['tone_2'] = [tone_2, tone_2_val]; 
         self.msg_em_results_dict_full['tone_3'] = [tone_3, tone_3_val]; self.msg_em_results_dict_full['tone_4'] = [tone_4, tone_4_val]; 
@@ -369,9 +369,9 @@ class Emoter(object):
         self.msg_em_results_dict_strong['tone_1'] = [tone_1, tone_1_val]; self.msg_em_results_dict_strong['tone_2'] = [tone_2, tone_2_val]; 
         self.msg_em_results_dict_strong['tone_3'] = [tone_3, tone_3_val]; self.msg_em_results_dict_strong['tone_4'] = [tone_4, tone_4_val]; 
         # msg_em_results_dict_strong['tone_5'] = [tone_5, tone_5_val]
-        print("\n\tStrongest tones detected: ", "\n\t\t", self.msg_em_results[0][0][0], self.msg_em_results[0][0][1], "\t", 
-                self.msg_em_results[0][1][0], self.msg_em_results[0][1][1], "\t", self.msg_em_results[0][2][0], self.msg_em_results[0][2][1],
-              "\n\t\t", self.msg_em_results[0][3][0], self.msg_em_results[0][3][1], "\t", self.msg_em_results[0][4][0], self.msg_em_results[0][4][1])
+        print("\n\tStrongest tones detected: ", "\n\t\t", self.msg_em_results[0][0], self.msg_em_results[0][1], "\t", 
+                self.msg_em_results[1][0], self.msg_em_results[1][1], "\t", self.msg_em_results[2][0], self.msg_em_results[2][1],
+              "\n\t\t", self.msg_em_results[3][0], self.msg_em_results[3][1], "\t", self.msg_em_results[4][0], self.msg_em_results[4][1])
         self.strongest_detected_tone = str(self.msg_em_results_dict_strong['tone_1'][0])
         self.strongest_detected_tone_val = str(self.msg_em_results_dict_strong['tone_1'][1])
         self.classifyToneClusters(_message)

@@ -217,7 +217,7 @@ $(document).ready(function () {
 $("#main-text").submit(function(e){
     var form = $(this);
         $.ajax({ 
-            url   : '/chat',
+            url   : '/app/chat',
             type  : form.attr('method'),
             data  : form.serialize(),
             beforeSend:    function() {

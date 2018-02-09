@@ -9,7 +9,7 @@ emt = emoter.Emoter(brain_path="fitness_coach")
 
 firstTime = True
 
-@app.route("/chat", methods=['GET', 'POST'])
+@app.route("/app/chat", methods=['GET', 'POST'])
 def giveResponse():
     text_input = request.form['text_input']
     res = emt.getMsg(text_input)
