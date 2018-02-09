@@ -1,4 +1,4 @@
-# Emoter / Emote - Sentiment analysis and chatbot libraries
+# Emote(r) - Sentiment analysis and chatbot libraries
 
 Last updated on Februrary 8, 2018
 
