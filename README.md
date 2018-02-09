@@ -125,13 +125,13 @@ Emote.py will start the basic command line interface.
 
 Emoter_trainer_wrapper.py offers a more advanced CLI for Emote, and is meant to be used to train and test Emote's database, but is not functional yet. 
 
-Run_emote.py starts Emote's app (Flask) and REST API. Go to localhost:5000/ in your browser to use the web interface.
+Run_emote.py starts Emote's app (Flask) and REST API. Go to localhost:8080/ in your browser to use the web interface.
 
 When you're running Emote for the first time, it'll automatically analyze an empty message, so that the initial loading of the classifier is done (so the first analysis made will take longer to finish).
 
 ### REST API Usage
 
-Run_emote.py starts the app by default on port 5000. Deployed locally, you can use the API as follows:
+Run_emote.py starts the app by default on port 8080. Deployed locally, you can use the API as follows:
 
 #### Sentiment analysis for single sentences:
 
@@ -152,7 +152,7 @@ returns JSON list of each sentence found in the text with classified sentiments.
 #### Example:
 
 ```
-http://localhost:5000/api/sentiment/My cherries and wine, rosemary and thyme And all of my peaches are ruined
+http://localhost:8080/api/sentiment/My cherries and wine, rosemary and thyme And all of my peaches are ruined
 ```
 returns:
 ```
@@ -211,7 +211,7 @@ and so on for all 26 base tones, in descending order of value. Eventually, the A
 
 ### Web UI
 
-To use Emote's web interface and mass analyzer feature (for CSV data input / output), start run_emote.py, and go to localhost:5000/ in your browser:
+To use Emote's web interface and mass analyzer feature (for CSV data input / output), start run_emote.py, and go to localhost:8080/ in your browser:
 
 <img src="/screenshots/emote-web-demo-1.png?raw=true" width="600px" />
 
@@ -273,7 +273,7 @@ emt.em.runAnalysis(message)
 [('instructive', 100.0), ('desire', 77.10000000000001), ('agreeable', 16.6), ('calm', 5.4), ('certainty', 5.2), ('challenging', 4.2), ('emphatic', 3.5000000000000004), ('intensity', 1.3), ('inquisitive', 0.8), ('accusative', 0.8), ('anger', 0.6), ('confusion', 0.4), ('vulgarity', -0.0), ('amusement', -0.0), ('admiration', -0.0), ('regret', -0.0), ('positive', -0.0), ('love', -0.0), ('sarcastic', -0.0), ('pride', -0.0), ('hate', 0.0), ('modest', -0.0), ('boredom', -0.0), ('negative', -0.0), ('joy', -0.0), ('ambivalence', -0.0)]
 ```
 
-To use Emoter's web interface (which was built for an art exhibit to be displayed on a CRT monitor, hence the aesthetics), start run_emoter.py, and go to localhost:5001 (port 5001 by default) in your browser:
+To use Emoter's web interface (which was built for an art exhibit to be displayed on a CRT monitor, hence the aesthetics), start run_emoter.py, and go to localhost:5000 (port 5000 by default) in your browser:
 
 <img src="/screenshots/emoter-web-demo-1.png?raw=true" width="600px" />
 
