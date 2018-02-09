@@ -51,8 +51,6 @@ class Emote(object):
                  normalizedProbValues = {}, sentences = [], sentencesProbValues = [], massResults = []
                  ):
 
-        self.train = train
-
         # COPY AND PASTE ALL OF BASE_CORPUS.TXT INTO SELF.TRAIN BELOW FOR TRAINING NEW MODELS
         # When reading base_corpus into list for training (in initialTrain function, we run into errors with escaped chars)
         self.train = [
@@ -137,7 +135,7 @@ class Emote(object):
 
 
     def initialTrain(self):
-        
+
         # For interchangable corpuses.. uncomment line below
         # selectedCorpus = input('\n\tEnter the name of the corpus file to load (Press enter to load default, from base_corpus.py): ')
         global defaultCorpus
