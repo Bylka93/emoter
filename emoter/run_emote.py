@@ -12,7 +12,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 em = emote.Emote()
-emt = emoter.Emoter(brain_path="fitness_coach")
 
 firstTime = True
 
