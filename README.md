@@ -211,7 +211,7 @@ and so on for all 26 base tones, in descending order of value. Eventually, the A
 
 ### Web UI
 
-To use Emote's web interface and mass analyzer feature (for CSV data input / output), start run_emoter.py, and go to localhost:5000/ in your browser:
+To use Emote's web interface and mass analyzer feature (for CSV data input / output), start run_emote.py, and go to localhost:5000/ in your browser:
 
 <img src="/screenshots/emote-web-demo-1.png?raw=true" width="600px" />
 
@@ -273,7 +273,7 @@ emt.em.runAnalysis(message)
 [('instructive', 100.0), ('desire', 77.10000000000001), ('agreeable', 16.6), ('calm', 5.4), ('certainty', 5.2), ('challenging', 4.2), ('emphatic', 3.5000000000000004), ('intensity', 1.3), ('inquisitive', 0.8), ('accusative', 0.8), ('anger', 0.6), ('confusion', 0.4), ('vulgarity', -0.0), ('amusement', -0.0), ('admiration', -0.0), ('regret', -0.0), ('positive', -0.0), ('love', -0.0), ('sarcastic', -0.0), ('pride', -0.0), ('hate', 0.0), ('modest', -0.0), ('boredom', -0.0), ('negative', -0.0), ('joy', -0.0), ('ambivalence', -0.0)]
 ```
 
-To use Emoter's web interface (which was built for an art exhibit to be displayed on a CRT monitor, hence the aesthetics), start run_emoter.py, and go to localhost:5000 in your browser:
+To use Emoter's web interface (which was built for an art exhibit to be displayed on a CRT monitor, hence the aesthetics), start run_emoter.py, and go to localhost:5001 (port 5001 by default) in your browser:
 
 <img src="/screenshots/emoter-web-demo-1.png?raw=true" width="600px" />
 

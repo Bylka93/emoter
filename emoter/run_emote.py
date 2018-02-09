@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request, render_template, abort, redirect, url_for, current_app, send_from_directory
-from flask_twisted import Twisted
 from werkzeug.utils import secure_filename
 
 import emote
@@ -112,7 +111,6 @@ def static_file(path):
     return app.send_static_file(path)
 
 
-# twisted = Twisted(app)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, threaded=True)

@@ -42,8 +42,6 @@ class Emote(object):
     levelsAnalysis = True    # Turn full levels analysis on?
     defaultCorpus = ""    # What's the default corpus?
 
-    # connectDB = sqlite3.connect('base_corpus.db') # Using SQL db for base corpus texts
-
     def __init__(self, message = "", pre_result = "", prob_dist = 0, prob_dist_max = 0, positive = 0, negative = 0, joy = 0, anger = 0, love = 0,
                  hate = 0, certainty = 0, boredom = 0, intensity = 0, regret = 0, challenging = 0, agreeable = 0, desire = 0, calm = 0,
                  sarcastic = 0, emphatic = 0, pride = 0, accusative = 0, admiration = 0, inquisitive = 0, modest = 0, instructive = 0,
