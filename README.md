@@ -104,7 +104,7 @@ You should be able to put the pickle file in the /data directory within Emote, b
 
 To train Emote's classifier, you will have to copy and paste all the lines in base_corpus.txt (or whatever your corpus is called) within /data into the list var 'self.train', initialized in the beginning of emote.py. So, self.train will then be a list of tuples comprised of the data from base_corpus.txt. 
 
-<img src="/screenshots/emote-train-copy-and-paste-here.png?raw=true" width="600px" />
+<img src="/screenshots/emote-training-copy-and-paste-here.png?raw=true" width="600px" />
 
 In the future, this will be changed so each line is read from a selected corpus text into Emote when it's initialized (at the moment, reading the base corpus text into a list gives errors with escaped chars in).
 
