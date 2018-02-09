@@ -12,7 +12,7 @@ Emoter includes a (mostly) automated way of parsing Facebook messages to build a
 
 These works were developed for my undergraduate thesis project at Parsons School of Design in 2017.
 
-Are you using Emote in a project or app? I'd love to know about it, email me at johnnyddunn@gmail.com.
+Are you using Emote in a project or app? Or do you hate it and think it sucks? I'd love to know more, email me at johnnyddunn@gmail.com.
 
 ## Screenshots
 
