@@ -62,7 +62,7 @@ Once you create your virtual environment, run the setup file or install the depe
 ```
 pip install -r requirements.txt
 ```
-
+<!-- 
 On Windows and Mac, you will have to manually install NumPy+MKL.
 
 Go to these links below to download NumPy+MKL and SciPy+MKL packages.
@@ -74,7 +74,7 @@ Go to these links below to download NumPy+MKL and SciPy+MKL packages.
 Cd to the directory where the whl files are while in your virtual env, and run this command to install the packages:
 ```
 pip install package_name_downloaded_here.whl
-```
+``` -->
 
 Then, download the necessary corpora to use TextBlob:
 ```
