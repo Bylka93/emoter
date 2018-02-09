@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 encoding = "utf-8"
+import codecs
 import os
 import sys
 import random
@@ -17,7 +18,6 @@ from textblob import TextBlob
 from textblob import TextBlob as TextBlob
 from textblob.classifiers import NaiveBayesClassifier
 from textblob.sentiments import NaiveBayesAnalyzer
-# import sqlite3
 import math
 import pandas as pd
 import numpy as np
@@ -26,15 +26,15 @@ from sklearn import preprocessing
 from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler
 import operator
 import csv
+import string
 
 class Emote(object):
 
-    emoteClassOn = False    # Is Emote being used as a library or class? 
+    runningImport = False    # Is Emote being used as a library or class? 
     runningScript = False   # Or is Emote being run as a script directly?
     firstTime = True     # Emote running for the first time?
 
     pickledOn = False    # Is a pickled database detected?
-    SQLDataOn = False    # Is a SQL database detected?
 
     fullCount = ""  # The string result detailing the full amount of classifications (sorted by type and frequency) that the current training database contains
 
@@ -53,10 +53,11 @@ class Emote(object):
 
         self.train = train
 
-        # PLACE THE TRAINING DATA (LIST OF TUPLES) IN SELF.TRAIN BELOW TO TRAIN THE CLASSIIFER (WILL AUTOMATICALLY BE SERIALIZED INTO PICKLE FILE)
-        # self.train = [
+        # COPY AND PASTE ALL OF BASE_CORPUS.TXT INTO SELF.TRAIN BELOW FOR TRAINING NEW MODELS
+        # When reading base_corpus into list for training (in initialTrain function, we run into errors with escaped chars)
+        self.train = [
 
-        # ]
+        ]
 
         self.message = message
         self.punctCountDict = punctCountDict
@@ -103,7 +104,7 @@ class Emote(object):
     def getInput(self, _message):
         global firstTime
         global runningScript
-        global emoteClassOn
+        global runningImport
         if runningScript == True:
             if firstTime == False:
                 self.message = input('\n\tWrite message to be analyzed: ')
@@ -122,13 +123,13 @@ class Emote(object):
                 # print("\nFIRST TIME IS TRUE")
                 print("\n\tRunning Emote as a library..")
                 self.message = _message
-                emoteClassOn = True
+                runningImport = True
                 self.countPunct(_message)
                 self.countWordSent(_message)
                 self.runAnalysis(_message)
             else:
                 # print("\nFIRST TIME IS FALSE")
-                emoteClassOn = True
+                runningImport = True
                 self.message = _message
                 self.countPunct(_message)
                 self.countWordSent(_message)
@@ -136,72 +137,22 @@ class Emote(object):
 
 
     def initialTrain(self):
-        # For interchangable corpuses.. uncomment code modifying selectedCorpus 
+        
+        # For interchangable corpuses.. uncomment line below
         # selectedCorpus = input('\n\tEnter the name of the corpus file to load (Press enter to load default, from base_corpus.py): ')
         global defaultCorpus
         global pickledOn
-        global SQLDataOn
-        global SQLData
-        global connectDB
         global fullCount
-
-        fullDatabase = str(self.train)
-        countPositive = fullDatabase.count("'positive')", 0, len(fullDatabase)); countNegative = fullDatabase.count("'negative')", 0, len(fullDatabase))
-        countLove = fullDatabase.count("'love')", 0, len(fullDatabase)); countHate = fullDatabase.count("'hate')", 0, len(fullDatabase))
-        countJoy = fullDatabase.count("'joy')", 0, len(fullDatabase)); countAnger = fullDatabase.count("'anger')", 0, len(fullDatabase))
-        countCertainty = fullDatabase.count("'certainty'", 0, len(fullDatabase)); countConfusion = fullDatabase.count("'confusion'", 0, len(fullDatabase))
-        countAmusement = fullDatabase.count("'amusement'", 0, len(fullDatabase)); countBoredom = fullDatabase.count("'boredom'", 0, len(fullDatabase))
-        countIntensity = fullDatabase.count("'intensity'", 0, len(fullDatabase)); countRegret = fullDatabase.count("'regret'", 0, len(fullDatabase))
-        countAgreeable = fullDatabase.count("'agreeable'", 0, len(fullDatabase)); countChallenging = fullDatabase.count("'challenging'", 0, len(fullDatabase))
-        countDesire = fullDatabase.count("'desire'", 0, len(fullDatabase)); countCalm = fullDatabase.count("'calm'", 0, len(fullDatabase))
-        countEmphatic = fullDatabase.count("'emphatic'", 0, len(fullDatabase)); countSarcastic = fullDatabase.count("'sarcastic'", 0, len(fullDatabase))
-        countInstructive = fullDatabase.count("'instructive'", 0, len(fullDatabase)); countAccusative = fullDatabase.count("'accusative'", 0, len(fullDatabase))
-        countAdmiration = fullDatabase.count("'admiration'", 0, len(fullDatabase)); countInquisitive = fullDatabase.count("'inquisitive'", 0, len(fullDatabase))
-        countModest = fullDatabase.count("'modest'", 0, len(fullDatabase)); countPride = fullDatabase.count("'pride'", 0, len(fullDatabase))
-        countAmbivalence = fullDatabase.count("'ambivalence'", 0, len(fullDatabase)); countVulgarity = fullDatabase.count("'vulgarity'", 0, len(fullDatabase))
-
-        fullCount = "\n\tNumbers and types of classifications in loaded database: \n"+ "\t\tPositive: " + str(countPositive) + "\t" + "Negative: " + str(countNegative) + \
-        "\t\tJoy: " + str(countJoy) + "\t\t" + "Anger: " + str(countAnger) + "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + \
-        "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + "\t\tAmusement: " + str(countAmusement) + "\t" + "Boredom: " + str(countBoredom) + \
-        "\t\tIntensity: " + str(countIntensity) + "\t" + "Regret: " + str(countRegret) + "\t\tAgreeable: " + str(countAgreeable) + "\t" + "Challenging: " + str(countChallenging) + \
-        "\t\tDesire: " + str(countDesire) + "\t" + "Calm: " + str(countCalm) + "\t\tEmphatic: " + str(countEmphatic) + "\t" + "Sarcastic: " + str(countSarcastic) + \
-        "\t\tInstructive: " + str(countInstructive) + "\t" + "Accusative: " + str(countAccusative) + "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + \
-        "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + "\t\tAmbivalence: " + str(countAmbivalence) + "\t" + "Vulgarity: " + str(countVulgarity)
-        "\t\tJoy: " + str(countJoy) + "\t\t" + "Anger: " + str(countAnger) + "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + \
-        "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + "\t\tAmusement: " + str(countAmusement) + "\t" + "Boredom: " + str(countBoredom) + \
-        "\t\tIntensity: " + str(countIntensity) + "\t" + "Regret: " + str(countRegret) + "\t\tAgreeable: " + str(countAgreeable) + "\t" + "Challenging: " + str(countChallenging) + \
-        "\t\tDesire: " + str(countDesire) + "\t" + "Calm: " + str(countCalm) + "\t\tEmphatic: " + str(countEmphatic) + "\t" + "Sarcastic: " + str(countSarcastic) + \
-        "\t\tInstructive: " + str(countInstructive) + "\t" + "Accusative: " + str(countAccusative) + "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + \
-        "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + "\t\tAmbivalence: " + str(countAmbivalence) + "\t" + "Vulgarity: " + str(countVulgarity)
-
-        print("""\n\tNumbers and types of classifications in database to be loaded: \n""")
-        print("\t\tPositive: " + str(countPositive) + "\t" + "Negative: " + str(countNegative))
-        print("\t\tLove: " + str(countLove) + "\t\t" + "Hate: " + str(countHate))
-        print("\t\tJoy: " + str(countJoy) + "\t\t" + "Anger: " + str(countAnger))
-        print("\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion))
-        print("\t\tAmusement: " + str(countAmusement) + "\t" + "Boredom: " + str(countBoredom))
-        print("\t\tIntensity: " + str(countIntensity) + "\t" + "Regret: " + str(countRegret))
-        print("\t\tAgreeable: " + str(countAgreeable) + "\t" + "Challenging: " + str(countChallenging))
-        print("\t\tDesire: " + str(countDesire) + "\t" + "Calm: " + str(countCalm))
-        print("\t\tEmphatic: " + str(countEmphatic) + "\t" + "Sarcastic: " + str(countSarcastic))
-        print("\t\tInstructive: " + str(countInstructive) + "\t" + "Accusative: " + str(countAccusative))
-        print("\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive))
-        print("\t\tModest: " + str(countModest) + "\t" + "Pride: " + str(countPride))
-        print("\t\tAmbivalence: " + str(countAmbivalence) + "\t" + "Vulgarity: " + str(countVulgarity))
 
         # if selectedCorpus != defaultCorpus and selectedCorpus != "":
             # defaultCorpus = selectedCorpus
         # elif selectedCorpus == "":
             # defaultCorpus = defaultCorpus
         # else:
-            # defaultCorpus = "base_corpus.py"
+            # defaultCorpus = "base_corpus.txt"
         selectedCorpus = defaultCorpus
 
         try:
-            # path = os.getcwd()
-            # path = os.path.join(path, 'data', 'base_corpus.pickle')
-            # dir = os.path.dirname(os.path.abspath(__file__))
-            # path = os.path.join(dir, 'data', 'base_corpus.pickle')
             dir = os.path.abspath(os.path.dirname(__file__))
             path = os.path.join(dir, 'data', 'base_corpus.pickle')
             with open(path, 'rb') as fp:
@@ -214,94 +165,75 @@ class Emote(object):
                 fp.close()
         except IOError as err:
             pickledOn = False
-            # path = os.getcwd()
-            # dir = os.path.dirname(os.path.abspath(__file__))
-            # path = os.path.join(dir, 'data', 'base_corpus.pickle')
-            # path = "/home/jddunn/emoter/data/base_corpus.pickle"
             dir = os.path.abspath(os.path.dirname(__file__))
             path = os.path.join(dir, 'data', 'base_corpus.pickle')
             print("\n\tNo pickled data found.. now creating and loading pickle..")
-        # If corpus text in SQL db..
-        # try:
-        #     path = os.getcwd()
-        #     path = os.path.join(path, '../data', 'base_corpus.db')
-        #     with open(path, 'r') as fp:
-        #         SQLDataOn = True
-        #         size = os.path.getsize(path)
-        #         if size > 5:
-        #             SQLDataOn = True
-        #             print("\n\tNo SQL found.")
-        #         else:
-        #             SQLDataOn = False
-        #             print("\n\tSQL found!")
-        #         fp.close()
-        # except IOError as err:
-        #     SQLDataOn = False
-        #     print("\n\tNo SQL data found.. now creating and loading SQL.")
 
-        # SHELVE STUFF
-        # READING TRAINING DATA FROM FILE DEFAULTCORPUS
+        # Training data
         if pickledOn == False:
+
             # Code below takes training data from text file input
-            # path = os.getcwd()
-            # path = os.path.join(path, 'data', 'base_corpus.txt')          
-            #     # shelvedData = shelve.open('base_corpus.db')
-            #     # if shelvedData:
-            #         # pickledOn = True
-            # # with open(path, 'r') as fp:
-            #     # print(fp)
-            # # fp = open(path,'r').read().tt('\n')
-            # # fp = open(path, 'r', encoding="utf8")
-            # # print("\n\tOpening training data.")
-            # # self.train = fp.readlines()
-            # # print(self.train)
-            # temp = [line[:-1] for line in self.train]
-            # print(temp)
-            #     # self.train = self.train.rstrip("\r\n")
-            #     # for i in self.train:
-            #     #     i = i.encode('ascii', 'backslashreplace')
-            #     #     i = i.rstrip("\r\n") 
-            #     #     print(i)
-            # path = os.path.join(path, 'data', 'base_corpus.py')          
-                # shelvedData = shelve.open('base_corpus.db')
-                # if shelvedData:
-                    # pickledOn = True
-            # with open(path, 'r') as fp:
-                # print(fp)
-            # fp = open(path,'r').read().tt('\n')
-            # self.train = fp.readlines()
-            # temp = [line[:-1] for line in self.train]
-            # print(temp)
-                # self.train = self.train.rstrip("\r\n")
-                # for i in self.train:
-                    # i = i.encode('ascii', 'backslashreplace')
-                    # i = i.rstrip("\r\n") 
-                    # print(i)
-            # lines = tuple(open(path, 'r', encoding = 'utf-8'))
-            # lines = lines.strip()
-            # print(str(lines))
-            # self.train = lines
-            print(self.train)
-            # print(self.train)
+            path = os.getcwd()
+            path = os.path.join(path, 'data', selectedCorpus)
+            data = codecs.open(path, 'r', encoding='utf-8').read().splitlines()
+
+            # self.train = data # Getting errors with reading base_corpus.txt into list
+
+            fullDatabase = str(self.train)
+            countPositive = fullDatabase.count("'positive')", 0, len(fullDatabase)); countNegative = fullDatabase.count("'negative')", 0, len(fullDatabase))
+            countLove = fullDatabase.count("'love')", 0, len(fullDatabase)); countHate = fullDatabase.count("'hate')", 0, len(fullDatabase))
+            countJoy = fullDatabase.count("'joy')", 0, len(fullDatabase)); countAnger = fullDatabase.count("'anger')", 0, len(fullDatabase))
+            countCertainty = fullDatabase.count("'certainty'", 0, len(fullDatabase)); countConfusion = fullDatabase.count("'confusion'", 0, len(fullDatabase))
+            countAmusement = fullDatabase.count("'amusement'", 0, len(fullDatabase)); countBoredom = fullDatabase.count("'boredom'", 0, len(fullDatabase))
+            countIntensity = fullDatabase.count("'intensity'", 0, len(fullDatabase)); countRegret = fullDatabase.count("'regret'", 0, len(fullDatabase))
+            countAgreeable = fullDatabase.count("'agreeable'", 0, len(fullDatabase)); countChallenging = fullDatabase.count("'challenging'", 0, len(fullDatabase))
+            countDesire = fullDatabase.count("'desire'", 0, len(fullDatabase)); countCalm = fullDatabase.count("'calm'", 0, len(fullDatabase))
+            countEmphatic = fullDatabase.count("'emphatic'", 0, len(fullDatabase)); countSarcastic = fullDatabase.count("'sarcastic'", 0, len(fullDatabase))
+            countInstructive = fullDatabase.count("'instructive'", 0, len(fullDatabase)); countAccusative = fullDatabase.count("'accusative'", 0, len(fullDatabase))
+            countAdmiration = fullDatabase.count("'admiration'", 0, len(fullDatabase)); countInquisitive = fullDatabase.count("'inquisitive'", 0, len(fullDatabase))
+            countModest = fullDatabase.count("'modest'", 0, len(fullDatabase)); countPride = fullDatabase.count("'pride'", 0, len(fullDatabase))
+            countAmbivalence = fullDatabase.count("'ambivalence'", 0, len(fullDatabase)); countVulgarity = fullDatabase.count("'vulgarity'", 0, len(fullDatabase))
+
+            fullCount = "\n\tNumbers and types of classifications in loaded database: \n"+ "\t\tPositive: " + str(countPositive) + "\t" + "Negative: " + str(countNegative) + \
+            "\t\tJoy: " + str(countJoy) + "\t\t" + "Anger: " + str(countAnger) + "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + \
+            "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + "\t\tAmusement: " + str(countAmusement) + "\t" + "Boredom: " + str(countBoredom) + \
+            "\t\tIntensity: " + str(countIntensity) + "\t" + "Regret: " + str(countRegret) + "\t\tAgreeable: " + str(countAgreeable) + "\t" + "Challenging: " + str(countChallenging) + \
+            "\t\tDesire: " + str(countDesire) + "\t" + "Calm: " + str(countCalm) + "\t\tEmphatic: " + str(countEmphatic) + "\t" + "Sarcastic: " + str(countSarcastic) + \
+            "\t\tInstructive: " + str(countInstructive) + "\t" + "Accusative: " + str(countAccusative) + "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + \
+            "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + "\t\tAmbivalence: " + str(countAmbivalence) + "\t" + "Vulgarity: " + str(countVulgarity)
+            "\t\tJoy: " + str(countJoy) + "\t\t" + "Anger: " + str(countAnger) + "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + \
+            "\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion) + "\t\tAmusement: " + str(countAmusement) + "\t" + "Boredom: " + str(countBoredom) + \
+            "\t\tIntensity: " + str(countIntensity) + "\t" + "Regret: " + str(countRegret) + "\t\tAgreeable: " + str(countAgreeable) + "\t" + "Challenging: " + str(countChallenging) + \
+            "\t\tDesire: " + str(countDesire) + "\t" + "Calm: " + str(countCalm) + "\t\tEmphatic: " + str(countEmphatic) + "\t" + "Sarcastic: " + str(countSarcastic) + \
+            "\t\tInstructive: " + str(countInstructive) + "\t" + "Accusative: " + str(countAccusative) + "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + \
+            "\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive) + "\t\tAmbivalence: " + str(countAmbivalence) + "\t" + "Vulgarity: " + str(countVulgarity)
+
+            print("""\n\tNumbers and types of classifications in database to be loaded: \n""")
+            print("\t\tPositive: " + str(countPositive) + "\t" + "Negative: " + str(countNegative))
+            print("\t\tLove: " + str(countLove) + "\t\t" + "Hate: " + str(countHate))
+            print("\t\tJoy: " + str(countJoy) + "\t\t" + "Anger: " + str(countAnger))
+            print("\t\tCertainty: " + str(countCertainty) + "\t" + "Confusion: " + str(countConfusion))
+            print("\t\tAmusement: " + str(countAmusement) + "\t" + "Boredom: " + str(countBoredom))
+            print("\t\tIntensity: " + str(countIntensity) + "\t" + "Regret: " + str(countRegret))
+            print("\t\tAgreeable: " + str(countAgreeable) + "\t" + "Challenging: " + str(countChallenging))
+            print("\t\tDesire: " + str(countDesire) + "\t" + "Calm: " + str(countCalm))
+            print("\t\tEmphatic: " + str(countEmphatic) + "\t" + "Sarcastic: " + str(countSarcastic))
+            print("\t\tInstructive: " + str(countInstructive) + "\t" + "Accusative: " + str(countAccusative))
+            print("\t\tAdmiration: " + str(countAdmiration) + "\t" + "Inquisitive: " + str(countInquisitive))
+            print("\t\tModest: " + str(countModest) + "\t" + "Pride: " + str(countPride))
+            print("\t\tAmbivalence: " + str(countAmbivalence) + "\t" + "Vulgarity: " + str(countVulgarity))
 
             print("\n\tOpening training data.")
-
-            # if SQLDataOn == False: 
-                # self.sendToSQL()
-                # currentTime = datetime.datetime.now().time()
-                # print("\n\n\tTIME NEW DATABASE STARTED TRAINING: ", currentTime)
-                # print("""\n\tStarting NaiveBayesClassifer training for """ + str(len(self.train)) + """ supervised classifications.. the initial training period will take a while.""")
-            # elif SQLDataOn == True:
-                # self.parseFromSQL()
+            # print(str(type(self.train)))
+            # print(str(self.train))
 
             random.seed(1)
             random.shuffle(self.train)
             self.cl = NaiveBayesClassifier(self.train)
             print("\n\tTraining now..")
+
             # shelvedData["base"] = cl # SHELF vs PICKLE
-            # path = os.getcwd()
-            # path = os.path.join(path, 'data', 'base_corpus.pickle')    
-            # dir = os.path.dirname(os.path.abspath(__file__))
+
             dir = os.path.abspath(os.path.dirname(__file__))
             path = os.path.join(dir, 'data', 'base_corpus.pickle')
 
@@ -331,50 +263,10 @@ class Emote(object):
                 print("\n\tPath was at:", path)  
                 sys.exit()
             pass
-        if emoteClassOn == True:
+        if runningImport == True:
             self.runAnalysis(_message)    
         else:
             self.getInput(_message)
-
-
-    # If corpus data was stored in SQL..
-    # def sendToSQL(self):
-    #     c.execute("DROP TABLE IF EXISTS Base")
-    #     c.execute("CREATE TABLE Base (Date_Sorted TEXT, Source TEXT, Message TEXT);")
-    #     for i in self.train:
-    #         # print(i)
-    #         try:
-    #             c.execute("INSERT INTO Base VALUES (?, ?, ?);", ('11-05-2016', 'general', i))
-    #             connectDB.commit()
-    #             print(i)
-    #         except:
-    #             print('err')
-    #             pass
-    #     c.close()
-
-    # def parseFromSQL(self):
-    #     global SQLData
-    #     global connectDB
-    #     print("Training data from SQL..")
-    #     try:
-    #         # connectDB.row_factory = sqlite3.Row
-    #         c.execute("SELECT Message FROM base WHERE 1")
-    #         # connectDB.text_factory = lambda x: x.decode("utf-8")
-    #         all_rows = cursor.fetchall()
-    #         # line = re.sub('[!@#$]', '', line)
-    #         # all_rows = [row[0].strip for row in cursor.fetchall()]
-    #         # for r in all_rows:
-    #             # temp_row = r[0]
-    #             # temp_row = temp_row.strip()
-    #             # temp_row = re.sub('\r\n', '', temp_row)
-    #             # temp_row = re.sub('\\', '', temp_row)
-    #             # temp_row = unicodedata.normalize('NFKD', temp_row).encode('ascii','ignore')
-    #             # print(temp_row)
-    #             # temp_row = temp_row.replace("\\","")
-    #             # SQLData.append(unicodedata.normalize('NFKD', temp_row))
-    #             # SQLData.append(str(temp_row).strip())
-    #     except:
-    #         pass
 
 
     def countPunct(self, _message):
@@ -469,13 +361,11 @@ class Emote(object):
         return csvResults, csvFile, self.massResults
 
 
-
-
     def runAnalysis (self, _message):
-            global emoteClassOn
+            global runningImport
             global firstTime 
             global runningScript
-            if firstTime == True and emoteClassOn == True:
+            if firstTime == True and runningImport == True:
                 print("\n\n\t\t(First time running analysis.. load pickle data. The initial analysis will be slower because of the models loading, and so is automatically run in the beginning.)")
                 try:
                     # path = os.getcwd()
@@ -486,7 +376,7 @@ class Emote(object):
                     path = os.path.join(dir, 'data', 'base_corpus.pickle')
                     with open(path, 'rb') as fp:
                         self.cl = pickle.load(fp)
-                        emoteClassOn = False
+                        runningImport = False
                         firstTime = False
                     print("\n\tFinished loading pickle.")
                 except:
@@ -550,8 +440,7 @@ class Emote(object):
                 self.normalizeProbabilityPunctuation(_message)         
             else:
                 self.normalizeProbabilityPunctuation (_message)
-                return self.normalizedProbValues, self.prob_dist, self.prob_dist_max, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
-
+                return self.normalizedProbValues
 
 
     def normalizeProbabilityPunctuation (self, _message):
@@ -757,28 +646,18 @@ class Emote(object):
 if __name__ == '__main__':
     runningScript = True
     firstTime = True
-    defaultCorpus = "base_corpus.py"
+    defaultCorpus = "base_corpus.txt"
     pickledOn = False
-    SQLData = []
-    SQLDataOn = False
-    emoteClassOn = False
+    runningImport = False
     fullCount = ""
     _message = ""
-    # connectDB = sqlite3.connect('base_corpus.db')  
-    # cursor = connectDB.cursor()  
-    # c = connectDB.cursor()    
     emote = Emote()
     emote.getInput(_message)
 else: 
     runningScript = False
     pickledOn = False
-    defaultCorpus = "base_corpus.py"
-    SQLData = []
-    SQLDataOn = False
-    emoteClassOn = True
+    defaultCorpus = "base_corpus.txt"
+    runningImport = True
     firstTime = True
     fullCount = ""
-    # connectDB = sqlite3.connect('base_corpus.db')    
-    # cursor = connectDB.cursor()
-    # c = connectDB.cursor()    
     emote = Emote()

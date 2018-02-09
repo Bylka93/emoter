@@ -1,31 +1,28 @@
-#!/usr/bin/env python
-from flask import Flask, jsonify, request, render_template, abort, redirect, url_for, current_app
-from textblob import TextBlob
-from textblob.utils import strip_punc
-import emote
-import os
+from flask import Flask, jsonify, request, render_template, abort, redirect, url_for, current_app, send_from_directory
+from flask_twisted import Twisted
 from werkzeug.utils import secure_filename
-from flask import send_from_directory
+
+import emote
 
 UPLOAD_FOLDER = '/'
 ALLOWED_EXTENSIONS = set(['csv'])
 
 app = Flask(__name__)
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 em = emote.Emote()
 
 firstTime = True
 
-
-@app.route("/api/sentiment/<string:text_input>", methods=['GET', 'POST'])
+@app.route("/api/sentiment/<string:text_input>", methods=['GET'])
 def get_sentiment(text_input):
     em.getInput(text_input)  # Polarity score
     sentiment = em.normalizedProbValues
     return jsonify({"result": sentiment})
 
 
-@app.route("/api/sentiment/sentences/<string:text_input>", methods=['GET', 'POST'])
+@app.route("/api/sentiment/sentences/<string:text_input>", methods=['GET'])
 def get_sentences_sentiment(text_input):
     em.split_into_sentences(text_input)
     sentencesResults = em.sentencesProbValues
@@ -46,8 +43,6 @@ def sentiment():
 @app.route("/app/sentiment/sentences", methods=['POST'])
 def sentences_sentiment():
     text = get_text(request)
-    # blob = TextBlob(text)
-    # em.getInput(text)
     em.split_into_sentences(text)
     sentencesResults = em.sentencesProbValues
     sentencesText = em.sentences
@@ -105,6 +100,7 @@ def upload_file():
             return redirect(url_for('static',
                                     filename="results.csv"))
 
+
 @app.route('/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
@@ -116,5 +112,7 @@ def static_file(path):
     return app.send_static_file(path)
 
 
+# twisted = Twisted(app)
+
 if __name__ == '__main__':
-    app.run(threaded=True, host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, threaded=True)

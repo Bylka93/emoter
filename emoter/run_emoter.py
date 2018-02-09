@@ -16,17 +16,9 @@ def giveResponse():
     print("\n\t", res)
     return jsonify(res=res)
 
-
 @app.route("/")
 def home():
-    # global firstTime
-    # if firstTime:
-        # firstTime = False
-        # Runs Emote to load the initial pickled data (first time analysis is always slower), before loading the page
-        # emt.getMsg("")
-    # return render_template("templates/emoter-home.html")
     return current_app.send_static_file('templates/emoter-home.html')
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', threaded = True, port=5001)

@@ -12,7 +12,6 @@
         return elem;
     };
 
-
     var getSentimentElement = function(score){
         // console.log(res.result)
         console.log(score)
@@ -24,8 +23,6 @@
         console.log(elem)
         return elem;
     };
-
-
 
     var errored = function(xml, status, message, $elem){
         if (status === "timeout"){
@@ -47,24 +44,6 @@
             success: success,
             error: function(xml, status, message){
                 errored(xml, status, message, $elem);
-            }
-        });
-    };
-
-    var updateNounPhrases = function(text){
-        $nounList = $("#nounPhrasesValue");
-        updateValue("app/noun_phrases", text, $nounList, function(res){
-            $nounList.empty();
-            var nounPhrases = res.result;
-            if (!text) {
-                $nounList.append("No text.");
-            }
-            else if (nounPhrases.length <= 0){
-                $nounList.append("<em>None found.</em>");
-            } else{
-                nounPhrases.forEach(function(elem, index) {
-                    $nounList.append("<li>" + elem + "</li>");
-                });
             }
         });
     };
