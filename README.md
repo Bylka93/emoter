@@ -126,7 +126,7 @@ See the image below for a reference to how quotations in the base corpus were tr
 
 Emote.py will start the basic command line interface.
 
-Emoter_trainer_wrapper.py offers a more advanced CLI for Emote, and is meant to be used to train and test Emote's database, but is not functional yet. 
+Emoter_trainer_wrapper.py offers a more advanced CLI for Emote, and is meant to be used to train and test Emote's database, but is not fully functional yet. 
 
 Run_emote.py starts Emote's app (Flask) and REST API. Go to localhost:8080/ in your browser to use the web interface.
 
