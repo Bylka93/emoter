@@ -161,7 +161,7 @@ returns:
 ```
 { "result": [ [ "intensity", 100.0 ], [ "agreeable", 44.800000000000004 ], [ "inquisitive", 24.099999999999998 ], [ "emphatic", 24.0 ], [ "anger", 19.1 ], [ "certainty", 14.7 ], [ "challenging", 11.200000000000001 ], [ "instructive", 6.0 ], [ "hate", 4.6 ], [ "accusative", 4.6 ], [ "desire", 3.1 ], [ "positive", 1.7000000000000002 ], [ "confusion", 1.6 ], [ "negative", 0.4 ], [ "calm", 0.4 ], [ "vulgarity", 0.4 ], [ "joy", 0.0 ], [ "love", 0.0 ], [ "amusement", 0.0 ], [ "boredom", 0.0 ], [ "regret", 0.0 ], [ "sarcastic", 0.0 ], [ "admiration", 0.0 ], [ "modest", 0.0 ], [ "pride", 0.0 ], [ "ambivalence", 0.0 ] ] }
 ```
-
+and
 ```
 http://localhost:8080/api/sentiment/sentiment/sentences/“Cherry” is featured on Lana’s fifth studio album. Alluding to the relationship with a man that takes risks and turns them into the relation where Lana feels like breaking apart; she knows that “real love” has difficult moments and that’s why she still loves him. It has a melancholic stripped-back feel with heavy strings and trap drums serving as background across the song specially on the chorus.
 ```
