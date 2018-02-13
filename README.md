@@ -1,6 +1,8 @@
 # Emote(r) - Sentiment analysis and chatbot libraries
 
-Last updated on Februrary 8, 2018
+Last updated on Februrary 13, 2018
+
+[https://jddunn.github.io/emoter/](https://jddunn.github.io/emoter/)
 
 [How to Make a Digital Personality of Yourself Using Chatbots, Facebook, and Empathy](https://medium.com/@johnnyfived/how-to-make-a-digital-personality-of-yourself-using-chatbots-facebook-and-empathy-8b0c53afa9bd)
 
