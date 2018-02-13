@@ -625,9 +625,10 @@ class Emote(object):
         self.normalizedProbValues = list(self.normalizedProbValues)
 
         if runningScript == True:
-            print("\n\tFinal results: " + str(self.normalizedProbValues))
+            print("\n\tFinal analysis results: " + str(self.normalizedProbValues))
             self.getInput(_message)
-
+        else:
+            print("Final analysis results: " + str(self.normalizedProbValues))
         return self.normalizedProbValues, self.positive, self.negative, self.joy, self.anger, self.love, self.hate, self.certainty, self.confusion, self.amusement, self.boredom, self.intensity, self.regret, self.agreeable, self.challenging, self.desire, self.calm, self.emphatic, self.sarcastic, self.instructive, self.accusative, self.admiration, self.inquisitive, self.modest, self.ambivalence, self.vulgarity
 
 

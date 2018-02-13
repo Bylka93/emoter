@@ -148,7 +148,7 @@ returns JSON list of 26 base emotional tones and their percentage levels.
 api/sentiment/sentences/<text>
 ```
 
-returns JSON list of each sentence found in the text with classified sentiments.
+returns JSON dictionary with keys being each sentence found in the text, and values containing lists of the corresponding classified sentiments.
 
 #### Example:
 
@@ -158,6 +158,14 @@ http://localhost:8080/api/sentiment/My cherries and wine, rosemary and thyme And
 returns:
 ```
 { "result": [ [ "intensity", 100.0 ], [ "agreeable", 44.800000000000004 ], [ "inquisitive", 24.099999999999998 ], [ "emphatic", 24.0 ], [ "anger", 19.1 ], [ "certainty", 14.7 ], [ "challenging", 11.200000000000001 ], [ "instructive", 6.0 ], [ "hate", 4.6 ], [ "accusative", 4.6 ], [ "desire", 3.1 ], [ "positive", 1.7000000000000002 ], [ "confusion", 1.6 ], [ "negative", 0.4 ], [ "calm", 0.4 ], [ "vulgarity", 0.4 ], [ "joy", 0.0 ], [ "love", 0.0 ], [ "amusement", 0.0 ], [ "boredom", 0.0 ], [ "regret", 0.0 ], [ "sarcastic", 0.0 ], [ "admiration", 0.0 ], [ "modest", 0.0 ], [ "pride", 0.0 ], [ "ambivalence", 0.0 ] ] }
+```
+
+```
+http://localhost:8080/api/sentiment/sentiment/sentences/“Cherry” is featured on Lana’s fifth studio album. Alluding to the relationship with a man that takes risks and turns them into the relation where Lana feels like breaking apart; she knows that “real love” has difficult moments and that’s why she still loves him. It has a melancholic stripped-back feel with heavy strings and trap drums serving as background across the song specially on the chorus.
+```
+returns:
+```
+{ "results": { "Alluding to the relationship with a man that takes risks and turns them into the relation where Lana feels like breaking apart; she knows that \u201creal love\u201d has difficult moments and that\u2019s why she still loves him.": [ [ "instructive", 100.0 ], [ "desire", 36.7 ], [ "emphatic", 23.599999999999998 ], [ "inquisitive", 3.1 ], [ "calm", 3.0 ], [ "certainty", 2.1999999999999997 ], [ "accusative", 1.6 ], [ "agreeable", 0.8999999999999999 ], [ "confusion", 0.8 ], [ "challenging", 0.3 ], [ "anger", 0.1 ], [ "positive", 0.0 ], [ "negative", 0.0 ], [ "joy", 0.0 ], [ "love", 0.0 ], [ "hate", 0.0 ], [ "amusement", 0.0 ], [ "boredom", 0.0 ], [ "intensity", 0.0 ], [ "regret", 0.0 ], [ "sarcastic", 0.0 ], [ "admiration", 0.0 ], [ "modest", 0.0 ], [ "pride", 0.0 ], [ "ambivalence", 0.0 ], [ "vulgarity", 0.0 ] ], "It has a melancholic stripped-back feel with heavy strings and trap drums serving as background across the song specially on the chorus.": [ [ "intensity", 100.0 ], [ "positive", 93.60000000000001 ], [ "emphatic", 58.3 ], [ "instructive", 11.0 ], [ "negative", 10.100000000000001 ], [ "anger", 9.1 ], [ "challenging", 5.800000000000001 ], [ "calm", 5.5 ], [ "vulgarity", 4.5 ], [ "certainty", 4.3999999999999995 ], [ "agreeable", 4.3999999999999995 ], [ "inquisitive", 4.3999999999999995 ], [ "accusative", 2.8000000000000003 ], [ "hate", 1.0999999999999999 ], [ "desire", 1.0 ], [ "confusion", 0.5 ], [ "ambivalence", 0.1 ], [ "joy", 0.0 ], [ "love", 0.0 ], [ "amusement", 0.0 ], [ "boredom", 0.0 ], [ "regret", 0.0 ], [ "sarcastic", 0.0 ], [ "admiration", 0.0 ], [ "modest", 0.0 ], [ "pride", 0.0 ] ], "\u201cCherry\u201d is featured on Lana\u2019s fifth studio album.": [ [ "emphatic", 100.0 ], [ "certainty", 55.2 ], [ "calm", 21.2 ], [ "instructive", 12.6 ], [ "agreeable", 1.6 ], [ "inquisitive", 0.6 ], [ "confusion", 0.4 ], [ "desire", 0.2 ], [ "anger", 0.1 ], [ "hate", 0.1 ], [ "intensity", 0.1 ], [ "admiration", 0.1 ], [ "positive", 0.0 ], [ "negative", 0.0 ], [ "joy", 0.0 ], [ "love", 0.0 ], [ "amusement", 0.0 ], [ "boredom", 0.0 ], [ "regret", 0.0 ], [ "challenging", 0.0 ], [ "sarcastic", 0.0 ], [ "accusative", 0.0 ], [ "modest", 0.0 ], [ "pride", 0.0 ], [ "ambivalence", 0.0 ], [ "vulgarity", 0.0 ] ] } }
 ```
 
 ### Library Usage
@@ -178,7 +186,7 @@ You will get a list of tuples of all the emotional tone values in descending ord
 ```
 You can get values from the result like this:
 ```
-result[0][0]
+result[0]
 ```
 returns the strongest tone classification-value pair:
 ```
@@ -186,7 +194,7 @@ returns the strongest tone classification-value pair:
 ```
 and
 ```
-result[0][0][0]
+result[0][0]
 ```
 returns the strongest tone classification:
 ```
@@ -194,7 +202,7 @@ returns the strongest tone classification:
 ```
 while
 ```
-result[0][0][1]
+result[0][1]
 ```
 returns the strongest tone value:
 ```
@@ -202,7 +210,7 @@ returns the strongest tone value:
 ```
 And so
 ```
-result[0][1]
+result[1]
 ```
 returns the 2nd strongest tone classification-value pair:
 ```
@@ -262,16 +270,6 @@ To train an existing Emoter with a new brain (must be located within /data:
 ```
 new_brain_path = "different_virtual_assistant"
 emtBot.trainDatabase(new_brain_path)
-```
-
-To call Emote's functions through Emoter..
-
-```
-import emoter
-emt = emoter.Emoter()
-message = "Enter your own message here to be analyzed."
-emt.em.runAnalysis(message)
-[('instructive', 100.0), ('desire', 77.10000000000001), ('agreeable', 16.6), ('calm', 5.4), ('certainty', 5.2), ('challenging', 4.2), ('emphatic', 3.5000000000000004), ('intensity', 1.3), ('inquisitive', 0.8), ('accusative', 0.8), ('anger', 0.6), ('confusion', 0.4), ('vulgarity', -0.0), ('amusement', -0.0), ('admiration', -0.0), ('regret', -0.0), ('positive', -0.0), ('love', -0.0), ('sarcastic', -0.0), ('pride', -0.0), ('hate', 0.0), ('modest', -0.0), ('boredom', -0.0), ('negative', -0.0), ('joy', -0.0), ('ambivalence', -0.0)]
 ```
 
 To use Emoter's web interface (which was built for an art exhibit to be displayed on a CRT monitor, hence the aesthetics), start run_emoter.py, and go to localhost:5000 (port 5000 by default) in your browser:

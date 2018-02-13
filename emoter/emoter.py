@@ -22,12 +22,13 @@ import fileinput
 
 # Import emote library
 from emote import emote
+
 WORD = re.compile(r'\w+')
 
 class Emoter(object):
 
     # Emoter script is not yet written as a library or module
-    emoterClassOn = False    # Is Emote being used as a library or modules? 
+    runningImport = False    # Is Emote being used as a library or modules? 
     runningScript = False   # Or is Emote being run as a script directly?
     firstTime = True     # Emote running for the first time?
 
@@ -122,7 +123,7 @@ class Emoter(object):
     def getMsg(self, _message):
         global firstTime
         global runningScript
-        global emoterClassOn
+        global runningImport
         # global num_total_messages
         # global num_user_messages
         global trainingData
@@ -135,14 +136,14 @@ class Emoter(object):
                 # num_total_messages+=1
                 # num_user_messages+=1
                 self.msg_em_results = emote.runAnalysis(_message)
-                os.system('cls')
+                # os.system('cls')
                 print('\n\tEmoter  ' + self.brain_path + '  Analysis Report',)
                 # print('\n\tOverall Conversation Levels: ', )
                 print('\n\tYour message was: ', _message)
                 self.analyzeMessage(_message)
                 self.findMsgResponse(_message)
             else: 
-                os.system('cls')
+                # os.system('cls')
                 self.brain_path = input("\n\tType in the folder dir (within /data) of the Emoter brain_path you wish to run: \
                     \n\n\t(Just press enter to load the default corpus, which is currently fitness_coach)\n\t")
                 if self.brain_path is "":
@@ -158,14 +159,14 @@ class Emoter(object):
                     self.brain_path = "fitness_coach"
                 print("\n\tRunning Emoter agent  " + self.brain_path + "  as a library for first time..")
                 self.message = _message
-                emoterClassOn = True
+                runningImport = True
                 firstTime = False
                 self.trainDatabase(_brain_path = None)
                 self.msg_em_results = emote.runAnalysis(_message)
                 self.analyzeMessage(_message)
                 self.findMsgResponse(_message)
             else:
-                emoterClassOn = True
+                runningImport = True
                 self.response_found = False
                 self.default_eliminated = False
                 self.message = _message
@@ -611,7 +612,7 @@ class Emoter(object):
                         print("\n\n\t  Y O U : ", "\t", _message)
                         print("\n\n\t  E M O T E R : ", "\t", self.matchingStatementResponse[:-1])
                         # print("\n\n\t  E M O T E R : ", "\t", self.matchingStatementResponse)
-                        if not self.emoterClassOn and runningScript:
+                        if not self.runningImport and runningScript:
                             self.getMsg(_message)
                         else:
                             return self.matchingStatementResponse
@@ -651,7 +652,7 @@ class Emoter(object):
                         print("\n\n\t  Y O U : ", "\t", _message)
                         print("\n\n\t  E M O T E R  : ", "\t", self.matchingStatementResponse[:-1])
                         # print("\n\n\t  E M O T E R : ", "\t", self.matchingStatementResponse)
-                        if not self.emoterClassOn and runningScript:
+                        if not self.runningImport and runningScript:
                             self.getMsg(_message)
                         else:
                             return self.matchingStatementResponse
@@ -689,7 +690,7 @@ class Emoter(object):
                         print("\n\n\t  Y O U : ", "\t", _message)
                         print("\n\n\t  E M O T E R : ", "\t", self.matchingStatementResponse[:-1])  
                         # print("\n\n\t  E M O T E R : ", "\t", self.matchingStatementResponse)
-                        if not self.emoterClassOn and runningScript:
+                        if not self.runningImport and runningScript:
                             self.getMsg(_message)
                         else:
                             return self.matchingStatementResponse
@@ -731,7 +732,7 @@ class Emoter(object):
                         print("\n\n\t  Y O U : ", "\t", _message)
                         print("\n\n\t  E M O T E R : ", "\t", self.matchingStatementResponse[:-1])
                         # print("\n\n\t  E M O T E R : ", "\t", self.matchingStatementResponse)
-                        if not self.emoterClassOn and runningScript:
+                        if not self.runningImport and runningScript:
                             self.getMsg(_message)
                         else:
                             return self.matchingStatementResponse
@@ -743,7 +744,7 @@ class Emoter(object):
                         else:
                             # print("\n\n\tAgent failiure. Could not find response in database! Please try again.")
                             self.response_found = False
-                            if not self.emoterClassOn and runningScript:
+                            if not self.runningImport and runningScript:
                                 self.getMsg(_message)
         except:
             pass
@@ -790,7 +791,7 @@ class Emoter(object):
 if __name__ == '__main__':
     runningScript = True
     firstTime = True
-    emoterClassOn = False
+    runningImport = False
     _message = ""
     brain_path = "" # Default conversation corpus
     emoter = Emoter(brain_path)
@@ -798,6 +799,6 @@ if __name__ == '__main__':
 
 else:
     runningScript = False
-    emoterClassOn = True
+    runningImport = True
     firstTime = True
     emoter = Emoter(brain_path = "") # Default conversation corpus
