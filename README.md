@@ -1,6 +1,6 @@
 # Emote(r) - Sentiment analysis and chatbot libraries
 
-Last updated on Februrary 13, 2018
+Last updated on Februrary 17, 2018
 
 [https://jddunn.github.io/emoter/](https://jddunn.github.io/emoter/)
 
@@ -41,7 +41,7 @@ Emoter bot built with my own personality by using my Facebook messages for its c
 
 Emote uses the TextBlob / NLTK, NumPy, pandas, and scikit-learn libraries to build a probabilistic sentiment analyzer for 26 different classifications. These classifications have been divided into 13 pairs of opposites, and are designed to be grouped together to create tone clusters that can then lead to further tone classifications (currently for a total of 36), as well as decrease false positive detections.
 
-Emoter is a basic but functional chatbot library intergrated with Emote, in order to give conversational agents the ability to better empathize with users and give back more emotionally appropriate responses. Emoter chatbots can operate on a "higher" level of thinking, by first categorizing messages and then choosing specific, interchangable "conversations" (lists of text responses) to respond from based on detected emotions in user messages.
+Emoter is a basic but functional chatbot library intergrated with Emote, in order to give conversational agents the ability to better empathize with users and give back more emotionally appropriate responses. Essentially, Emoter is able to understand user intentions through by analyzing user messages with Emote, then choosing specific, interchangable "conversations" (lists of text responses) to respond from.
 
 Both Emote and Emoter can be run offline. Emote comes with a REST API for basic sentiment analysis, and has a mass analysis feature (currently only supporting CSV and text files).
 
