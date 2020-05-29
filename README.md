@@ -1,6 +1,8 @@
 # Emote(r) - Sentiment analysis and chatbot libraries
 
-Last updated on Februrary 17, 2018
+(If you're using this dataset or code in any of yur projects, please let me know! [https://github.com/jddunn/emoter/tree/master/emoter/data](https://github.com/jddunn/emoter/tree/master/emoter/data))
+
+Docs / code updated on Februrary 17, 2018
 
 [https://jddunn.github.io/emoter/](https://jddunn.github.io/emoter/)
 
